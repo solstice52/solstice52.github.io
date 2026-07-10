@@ -301,6 +301,7 @@
           console.error("Load failed.", e);
         }
         let login = await request("https://dev.maelink.net/login", "post", {setCookie: true});
+        console.log(login);
         if (!login.error) {
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
