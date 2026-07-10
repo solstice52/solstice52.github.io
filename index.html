@@ -217,7 +217,7 @@
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".solstice").style.display = "block";
           let posts = await request("https://dev.maelink.net/home", "get");
-          console.log(posts);
+          console.log("posts:", posts);
           if (!posts.error) {
             for (post of posts.posts) loadPost(post, "beforeend");
           }
@@ -225,13 +225,13 @@
       }
       window.onload = async () => {
         let login = await request("https://dev.maelink.net/login", "post", {setCookie: true});
-        console.log(login);
+        console.log("auto login:", login);
         if (!login.error) {
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".solstice").style.display = "block";
           let posts = await request("https://dev.maelink.net/home", "get");
-          console.log(posts);
+          console.log("posts:", posts);
           if (!posts.error) {
             for (post of posts.posts) loadPost(post, "beforeend");
           }
@@ -239,15 +239,16 @@
       }
       document.querySelector("#register").onclick = async () => {
         let register = await request("https://dev.maelink.net/register", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
-        console.log(register);
+        console.log("register:", register);
       }
       document.querySelector("#send").onclick = async () => {
         let send = await request("https://dev.maelink.net/home", "post", {"content": document.querySelector("#msg").value.trim()});
-        console.log(send);
+        console.log("send:", send);
       }
       let socket = new WebSocket("wss://dev.maelink.net/socket");
       socket.onmessage = (msg) => {
         try {
+          console.log("Received WebSocket message.", msg);
           let data = JSON.parse(msg.data);
           if (data.type == "home:post") loadPost(data.message, "afterbegin");
         } catch (e) {
