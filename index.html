@@ -216,6 +216,7 @@
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".solstice").style.display = "block";
+          socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
           let posts = await request("https://dev.maelink.net/home", "get");
           console.log("posts:", posts);
           if (!posts.error) {
@@ -248,11 +249,11 @@
       let socket = new WebSocket("wss://dev.maelink.net/socket");
       socket.onmessage = (msg) => {
         try {
-          console.log("Received WebSocket message.", msg);
+          console.log("Received WebSocket message:", msg);
           let data = JSON.parse(msg.data);
           if (data.type == "home:post") loadPost(data.message, "afterbegin");
         } catch (e) {
-          console.log("Data was irregular.", e, msg.data);
+          console.log("Data was irregular.", e, "\n", msg.data);
         }
       }
     </script>
