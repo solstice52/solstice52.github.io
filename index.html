@@ -27,7 +27,7 @@
         margin: 0.5em;
       }
       h2 {
-        font-size: 4em;
+        font-size: 2em;
       }
       button {
         background: linear-gradient(35deg, #121ea1, #b3121f);
@@ -98,12 +98,9 @@
       }
       .like {
         background: linear-gradient(35deg, #f00, #f08);
-        padding-inline: 0.4em;
-        padding-block: 0.3em;
+        padding-inline: 0.5em;
+        padding-block: 0.4em;
         margin-top: 0.8em;
-      }
-      .solstice {
-        text-align: center;
       }
       #errors {
         background-color: #f007;
@@ -126,6 +123,24 @@
         height: 100%;
         background: linear-gradient(0deg, #fff2 0%, #fff0 33%);
       }
+
+      .container {
+        width: 100%;
+        display: grid;
+        grid-template-areas: "sidebar main";
+        grid-template-columns: 10% auto;
+      }
+      .sidebar {
+        grid-area: sidebar;
+        height: 100vw;
+        background-color: lightgray;
+      }
+      .solstice {
+        grid-area: main;
+        text-align: center;
+        height: 100vw;
+        background-color: gray;
+      }
     </style>
   </head>
   <body>
@@ -141,11 +156,20 @@
       <button id="login">Log in</button><br>
       <button id="register" disabled>Register</button>
     </div>
-    <div class="solstice" style="display: none;">
-      <h2 style="font-family: Michroma, sans-serif;">Solstice</h2>
-      <textarea type="text" id="msg" placeholder="What's on your mind today?"></textarea>
-      <button id="send"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button><br>
-      <div id="posts"></div>
+    <div class="container">
+      <div class="sidebar">
+        <h3>maelink</h3>
+        <button id="home"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</button>
+        <button id="inbox"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>Inbox</button>
+        <button id="bubbles"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bubbles-icon lucide-bubbles"><path d="M7.001 15.085A1.5 1.5 0 0 1 9 16.5"/><circle cx="18.5" cy="8.5" r="3.5"/><circle cx="7.5" cy="16.5" r="5.5"/><circle cx="7.5" cy="4.5" r="2.5"/></svg>Bubbles</button>
+        <button id="settings"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>Settings</button>
+      </div>
+      <div class="solstice" style="display: none;">
+        <h2 style="font-family: Michroma, sans-serif; font-size: 3em; margin: 0;">Solstice</h2>
+        <textarea type="text" id="msg" placeholder="What's on your mind today?"></textarea>
+        <button id="send"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button><br>
+        <div id="posts"></div>
+      </div>
     </div>
     <div class="faq" style="text-align: center;">
       <h2>how secure will my info be?</h2>
