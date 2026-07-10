@@ -261,7 +261,8 @@
       }
       async function request(url, method, body, headers = {}) {
         const defaults = {"Content-Type": "application/json"};
-        return fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)}).then(response => response.json()).then(json => console.log(json)).catch(error => console.error(error));
+        let response = fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)}).then(response => response.json());
+        console.log(response);
       }
       document.querySelector("#user").oninput = () => {
         check();
@@ -292,14 +293,6 @@
         }
       }
       window.onload = async () => {
-        try {
-          const token = localStorage.getItem("token");
-          const key = await load();
-          const [iv, cipher] = unpackage(token);
-          const decrypted = await decrypt(cipher, iv, key);
-        } catch (e) {
-          console.error("Load failed.", e);
-        }
         let login = await request("https://dev.maelink.net/login", "post", {setCookie: true});
         console.log(login);
         if (!login.error) {
