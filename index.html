@@ -26,6 +26,9 @@
         padding-block: 0.5em;
         margin: 0.5em;
       }
+      h2 {
+        font-size: 2em;
+      }
       button {
         background: linear-gradient(35deg, #121ea1, #b3121f);
         color: #fefefe;
@@ -211,13 +214,13 @@
         }
       }
       document.querySelector("#login").onclick = async () => {
-        let login = await request("https://dev.maelink.net/login", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
+        let login = await request("https://dev2.maelink.net/login", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
         if (!login.error) {
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".solstice").style.display = "block";
           socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
-          let posts = await request("https://dev.maelink.net/home", "get");
+          let posts = await request("https://dev2.maelink.net/home", "get");
           console.log("posts:", posts);
           if (!posts.error) {
             for (post of posts.posts) loadPost(post, "beforeend");
@@ -225,14 +228,14 @@
         }
       }
       window.onload = async () => {
-        let login = await request("https://dev.maelink.net/login", "post", {setCookie: true});
+        let login = await request("https://dev2.maelink.net/login", "post", {setCookie: true});
         console.log("auto login:", login);
         if (!login.error) {
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".solstice").style.display = "block";
           socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
-          let posts = await request("https://dev.maelink.net/home", "get");
+          let posts = await request("https://dev2.maelink.net/home", "get");
           console.log("posts:", posts);
           if (!posts.error) {
             for (post of posts.posts) loadPost(post, "beforeend");
@@ -240,14 +243,14 @@
         }
       }
       document.querySelector("#register").onclick = async () => {
-        let register = await request("https://dev.maelink.net/register", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
+        let register = await request("https://dev2.maelink.net/register", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
         console.log("register:", register);
       }
       document.querySelector("#send").onclick = async () => {
-        let send = await request("https://dev.maelink.net/home", "post", {"content": document.querySelector("#msg").value.trim()});
+        let send = await request("https://dev2.maelink.net/home", "post", {"content": document.querySelector("#msg").value.trim()});
         console.log("send:", send);
       }
-      let socket = new WebSocket("wss://dev.maelink.net/socket");
+      let socket = new WebSocket("wss://dev2.maelink.net/socket");
       socket.onopen = () => console.log("WebSocket opened.");
       socket.onmessage = (msg) => {
         try {
