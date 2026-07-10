@@ -59,7 +59,7 @@
         align-content: center;
         vertical-align: middle;
       }
-      .lucide-heart {
+      .lucide-heart, .lucide-reply, .lucide-trash-2, .lucide.square-pen {
         margin-right: 0.5em;
       }
       .login {
@@ -263,6 +263,7 @@
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".container").style.display = "grid";
+          await socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
           let posts = await request("https://dev2.maelink.net/home", "get");
           console.log("posts:", posts);
           if (!posts.error) {
@@ -303,10 +304,6 @@
       }
       let socket = new WebSocket("wss://dev2.maelink.net/socket");
       let author = "";
-      socket.onopen = () => {
-        console.log("WebSocket opened.");
-        socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
-      }
       socket.onmessage = (msg) => {
         try {
           console.log("Received WebSocket message:", msg);
