@@ -38,6 +38,7 @@
         padding-inline: 1.2em;
         padding-block: 0.9em;
         margin: 0;
+        margin-bottom: 0.5em;
         border: 3px solid white;
         transition: all 0.22s ease;
       }
@@ -57,7 +58,6 @@
         display: inline-flex;
         align-content: center;
         vertical-align: middle;
-        margin-right: 0.3em;
       }
       .lucide-heart {
         margin-right: 0.5em;
@@ -129,16 +129,18 @@
         width: 100%;
         display: grid;
         grid-template-areas: "sidebar main";
-        grid-template-columns: 30% auto;
+        grid-template-columns: 20% auto;
       }
       .sidebar {
         grid-area: sidebar;
         height: 100vw;
+        background-color: #ffdeeeaa;
       }
       .solstice {
         grid-area: main;
         text-align: center;
         height: 100vw;
+        background-color: #eedeffaa;
       }
     </style>
   </head>
@@ -157,11 +159,11 @@
     </div>
     <div class="container">
       <div class="sidebar">
-        <h3>maelink</h3>
-        <button id="home"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</button>
-        <button id="inbox"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>Inbox</button>
-        <button id="bubbles"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bubbles-icon lucide-bubbles"><path d="M7.001 15.085A1.5 1.5 0 0 1 9 16.5"/><circle cx="18.5" cy="8.5" r="3.5"/><circle cx="7.5" cy="16.5" r="5.5"/><circle cx="7.5" cy="4.5" r="2.5"/></svg>Bubbles</button>
-        <button id="settings"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>Settings</button>
+        <h3><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3629_2)"><mask id="mask0_3629_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40"><path d="M40 0H0V40H40V0Z" fill="white"/></mask><g mask="url(#mask0_3629_2)"><path d="M31.4393 9.27176C32.9953 9.14903 33.9922 10.8928 33.0965 12.1713L19.8749 31.0489C18.877 32.4739 16.6424 31.8539 16.5211 30.1186L15.8796 20.9421C15.8424 20.4103 15.5771 19.9205 15.152 19.5988L14.9095 19.4152L7.53517 14.4605C6.08326 13.485 6.67579 11.2252 8.41957 11.0877L31.4393 9.27176Z" stroke="white" stroke-width="2"/><path d="M32.684 10.4971L16.2012 20.0134" stroke="white" stroke-width="2" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3629_2"><rect width="40" height="40" fill="white"/></clipPath></defs></svg> maelink</h3>
+        <button id="home"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</button>
+        <br><button id="inbox"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg> Inbox</button>
+        <br><button id="bubbles"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bubbles-icon lucide-bubbles"><path d="M7.001 15.085A1.5 1.5 0 0 1 9 16.5"/><circle cx="18.5" cy="8.5" r="3.5"/><circle cx="7.5" cy="16.5" r="5.5"/><circle cx="7.5" cy="4.5" r="2.5"/></svg> Bubbles</button>
+        <br><button id="settings"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg> Settings</button>
       </div>
       <div class="solstice" style="display: none;">
         <h2 style="font-family: Michroma, sans-serif; font-size: 3em; margin: 0;">Solstice</h2>
