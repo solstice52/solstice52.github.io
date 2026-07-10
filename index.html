@@ -247,6 +247,7 @@
         console.log("send:", send);
       }
       let socket = new WebSocket("wss://dev.maelink.net/socket");
+      socket.onopen = () => console.log("WebSocket opened.");
       socket.onmessage = (msg) => {
         try {
           console.log("Received WebSocket message:", msg);
@@ -256,6 +257,7 @@
           console.log("Data was irregular.", e, "\n", msg.data);
         }
       }
+      socket.onerror = (error) => console.log("WebSocket Error:", error);
     </script>
   </body>
 </html>
