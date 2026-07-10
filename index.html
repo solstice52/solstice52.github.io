@@ -27,7 +27,7 @@
         margin: 0.5em;
       }
       h2 {
-        font-size: 2em;
+        font-size: 4em;
       }
       button {
         background: linear-gradient(35deg, #121ea1, #b3121f);
@@ -98,6 +98,8 @@
       }
       .like {
         background: linear-gradient(35deg, #f00, #f08);
+        padding-inline: 0.4em;
+        padding-block: 0.3em;
         margin-top: 0.8em;
       }
       .solstice {
@@ -248,6 +250,7 @@
       }
       document.querySelector("#send").onclick = async () => {
         let send = await request("https://dev2.maelink.net/home", "post", {"content": document.querySelector("#msg").value.trim()});
+        if (!send.error) document.querySelector("#msg").value = "";
         console.log("send:", send);
       }
       let socket = new WebSocket("wss://dev2.maelink.net/socket");
