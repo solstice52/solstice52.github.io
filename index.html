@@ -193,7 +193,7 @@
       async function request(url, method, body, headers = {}) {
         const defaults = {"Content-Type": "application/json"};
         let response = await fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)});
-        console.log(await response.json());
+        return await response.json();
       }
       document.querySelector("#user").oninput = () => {
         check();
