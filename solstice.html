@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Solstice</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Michroma&family=Outfit:wght@100..900&display=swap');
+      body {
+        background: linear-gradient(35deg, #040727, #270407);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: Outfit, sans-serif;
+        color: #fefefe;
+      }
+      input[type=text], input[type=password], textarea {
+        border-radius: 1em;
+        font-family: Outfit, sans-serif;
+        width: clamp(9em, 70%, 25em);
+        background-color: #040727;
+        color: #fefefe;
+        padding-inline: 1em;
+        padding-block: 0.5em;
+        margin: 0.5em;
+      }
+      button {
+        background: linear-gradient(35deg, #121ea1, #b3121f);
+        color: #fefefe;
+        border-radius: 99em;
+        font-family: Outfit, sans-serif;
+        font-weight: 600;
+        padding-inline: 1.2em;
+        padding-block: 0.9em;
+        margin: 0;
+        border: 3px solid white;
+        transition: all 0.22s ease;
+      }
+      button:hover {
+        scale: 1.06;
+        cursor: pointer;
+        box-shadow: 0 0 12px #fefefe;
+      }
+      button:active {
+        scale: 0.99;
+      }
+      button:disabled {
+        background: linear-gradient(35deg, #474d8d, #854146);
+        cursor: default;
+      }
+      svg {
+        display: inline-flex;
+        align-content: center;
+        vertical-align: middle;
+      }
+      .lucide-heart {
+        margin-right: 0.5em;
+      }
+      .login {
+        background-color: #aaa3;
+        padding: 1em;
+        border: 3px solid #55d;
+        text-align: center;
+        border-radius: 2em;
+      }
+      .message {
+        text-align: left;
+        background: linear-gradient(170deg, #fff4, #fff3);
+        border: 2px solid white;
+        padding-inline: 1.5em;
+        padding-block: 0.5em;
+        border-radius: 1em;
+        margin-bottom: 1em;
+        width: clamp(15em, 90%, 90vw);
+        height: fit-content;
+      }
+      .author {
+        background: linear-gradient(-35deg, #f06c77, #6979f0);
+        color: transparent;
+        background-clip: text;
+        font-weight: 600;
+        margin-bottom: 0.5em;
+      }
+      .ts {
+        color: #55d;
+        font-style: italic;
+        font-weight: 500;
+        margin-left: 1.25em;
+      }
+      .text {
+        margin: 0;
+      }
+      .like {
+        background: linear-gradient(35deg, #f00, #f08);
+        margin-top: 0.8em;
+      }
+      .solstice {
+        text-align: center;
+      }
+      #errors {
+        background-color: #f007;
+        padding: 1em;
+        text-align: center;
+        border-radius: 2em;
+      }
+      #login {
+        margin-bottom: 0.6em;
+      }
+      #send {
+        margin-bottom: 1.5em;
+      }
+      #gradient {
+        position: fixed;
+        pointer-events: none;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(0deg, #fff2 0%, #fff0 33%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="gradient"></div>
+    <div class="login">
+      <h2 style="font-family: Michroma, sans-serif;">Welcome to Solstice.</h2>
+      <h4>The revolutionary maelink client that you will adore.<br>Try it out by logging in or registering below.</h4>
+      <label for="user">Username: </label><input type="text" id="user" placeholder="3 to 24 characters."><br>
+      <label for="pass">Password: </label><input type="password" id="pass" placeholder="6+ characters."><button type="button" id="toggle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button><br>
+      <input type="checkbox" id="show"><label for="show">Show problems as you type</label><br>
+      <p id="zxcvbn"></p>
+      <p id="errors" style="display: none;"></p>
+      <button id="login">Log in</button><br>
+      <button id="register" disabled>Register</button>
+    </div>
+    <div class="solstice" style="display: none;">
+      <h2 style="font-family: Michroma, sans-serif;">Solstice</h2>
+      <textarea type="text" id="msg" placeholder="What's on your mind today?"></textarea>
+      <button id="send"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button><br>
+      <div id="posts"></div>
+    </div>
+    <div class="faq" style="text-align: center;">
+      <h2>how secure will my info be?</h2>
+      <p>the info you input here will be sent to the maelink server, where it will be hashed and therefore irreversible. the only ways your unhashed data can be stolen are you voluntarily sharing it, and an attacker intercepting/spying on your requests or screen.</p><hr>
+      <h2>should I refrain from entering my info?</h2>
+      <p>despite the text above, no. your username is only stored in the maelink database, your password strength is checked locally using zxcvbn, and everything you input in this form or any other form on this website is sent to the maelink server only.</p><hr>
+      <h2>is this client good?</h2>
+      <p>hopefully! you can make it better by sending feedback to the developer, but ideally this client should be simple enough to navigate and be packed with as many features as possible. for now, it's still in development so not yet on that one sadly.</p><hr>
+    </div>
+    <h6>Built with love for v0.4.0</h6>
+    <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.min.js"></script>
+    <script>
+      function check() {
+        let score = zxcvbn(document.querySelector("#pass").value);
+        let suggestions = "";
+        if (score.feedback.suggestions.length > 0 && document.querySelector("#show").checked) {
+          suggestions = "<br>Suggestions:"
+          for (s of score.feedback.suggestions) {
+            suggestions += `<br>${s}`;
+          }
+          document.querySelector("#zxcvbn").innerHTML = `Password strength: ${score.score || 0}/4${suggestions || ""}`;
+        } else {
+          document.querySelector("#zxcvbn").innerHTML = "";
+        }
+        let error = false;
+        let errors = [];
+        document.querySelector("#errors").style.display = "none";
+        document.querySelector("#register").disabled = true;
+        document.querySelector("#errors").innerHTML = "";
+        if (/[^a-zA-Z0-9-_.]/gm.test(document.querySelector("#user").value)) {errors.push("Username contains a character not in the list a-z A-Z 0-9 - _ . /<br>"); error = true;}
+        if (document.querySelector("#user").value.length < 3) {errors.push("Username is shorter than 3 characters<br>"); error = true;}
+        if (document.querySelector("#user").value.length > 24) {errors.push("Username is longer than 24 characters<br>"); error = true;}
+        if ((score.score || 0) < 3) {errors.push("Password strength is below 3/4<br>"); error = true;}
+        if (document.querySelector("#pass").value.length < 8) {errors.push("Password is shorter than 8 characters<br>"); error = true;}
+        if (!error) {
+          document.querySelector("#register").disabled = false;
+        } else if (document.querySelector("#show").checked) {
+          document.querySelector("#errors").style.display = "block";
+          document.querySelector("#errors").innerHTML = errors.join("");
+        }
+      }
+      function loadPost(post, pos) {
+        document.querySelector("#posts").insertAdjacentHTML(pos, `
+      <div class="message">
+        <p class="author">${post.author} <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client}</span></p>
+        <p class="text">${post.content}</p>
+        <button class="like"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg><span id="like${post.id}">${post.likes}</span></button>
+      </div>`);
+      }
+      async function request(url, method, body, headers = {}) {
+        const defaults = {"Content-Type": "application/json"};
+        return fetch(url, {method: method.toUpperCase(), headers: {...defaults, ...headers}, body: JSON.stringify(body)}).then(response => {if (!response.ok) {throw new Error("Response was not ok");} return response.json();})
+      }
+      document.querySelector("#user").oninput = () => {
+        check();
+      }
+      document.querySelector("#pass").oninput = () => {
+        check();
+      }
+      document.querySelector("#toggle").onclick = () => {
+        if (document.querySelector("#pass").type == "password") {
+          document.querySelector("#pass").type = "text";
+          document.querySelector("#toggle").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>';
+        } else {
+          document.querySelector("#pass").type = "password";
+          document.querySelector("#toggle").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
+        }
+      }
+      document.querySelector("#login").onclick = async () => {
+        let login = await request("https://dev.maelink.net/login", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
+        if (!login.error) {
+          document.querySelector(".login").style.display = "none";
+          document.querySelector(".faq").style.display = "none";
+          document.querySelector(".solstice").style.display = "block";
+          let posts = await request("https://dev.maelink.net/home", "get");
+          console.log(posts);
+          if (!posts.error) {
+            for (post of posts.posts) loadPost(post, "beforeend");
+          }
+        }
+      }
+      window.onload = async () => {
+        let login = await request("https://dev.maelink.net/login", "post", {setCookie: true});
+        if (!login.error) {
+          document.querySelector(".login").style.display = "none";
+          document.querySelector(".faq").style.display = "none";
+          document.querySelector(".solstice").style.display = "block";
+          let posts = await request("https://dev.maelink.net/home", "get");
+          console.log(posts);
+          if (!posts.error) {
+            for (post of posts.posts) loadPost(post, "beforeend");
+          }
+        }
+      }
+      document.querySelector("#register").onclick = async () => {
+        let register = await request("https://dev.maelink.net/register", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
+        console.log(register);
+      }
+      let socket = new WebSocket("wss://dev.maelink.net/socket");
+    </script>
+  </body>
+</html>
