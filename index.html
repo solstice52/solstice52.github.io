@@ -231,6 +231,7 @@
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".solstice").style.display = "block";
+          socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
           let posts = await request("https://dev.maelink.net/home", "get");
           console.log("posts:", posts);
           if (!posts.error) {
