@@ -261,7 +261,7 @@
       }
       async function request(url, method, body, headers = {}) {
         const defaults = {"Content-Type": "application/json"};
-        return fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)}).then(response => {if (!response.ok) {throw new Error("Response was not ok.", response.json());} return response.json();})
+        return fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)}).then(response => {if (!response.ok) {console.error("Response was not ok.", response.json());} return response.json();})
       }
       document.querySelector("#user").oninput = () => {
         check();
