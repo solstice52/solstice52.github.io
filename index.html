@@ -153,75 +153,6 @@
     <h6>Built with love for v0.4.0</h6>
     <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.min.js"></script>
     <script>
-      const DB_NAME = "Solstice52";
-      const STORE_NAME = "keys";
-      const KEY_ALIAS = "AESGCMKEY";
-      function openDB() {
-        return new Promise((resolve, reject) => {
-          const request = indexedDB.open(DB_NAME, 1);
-          request.onupgradeneeded = (event) => {
-            const db = event.target.result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME);
-          };
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = () => reject(request.error);
-        });
-      }
-      async function save(key) {
-        const db = await openDB();
-        return new Promise((resolve, reject) => {
-          const request = db.transaction(STORE_NAME, "readwrite").objectStore(STORE_NAME).put(key, KEY_ALIAS);
-          request.onsuccess = () => resolve("Key stored.");
-          request.onerror = () => reject(request.error);
-        });
-      }
-      async function load() {
-        const db = await openDB();
-        return new Promise((resolve, reject) => {
-          const request = db.transaction(STORE_NAME, "readonly").objectStore(STORE_NAME).get(KEY_ALIAS);
-          request.onsuccess = () => {
-            if (request.result) {
-              resolve(request.result);
-            } else {
-              reject(new Error("Key not found."));
-            }
-          };
-          request.onerror = () => reject(request.error);
-        });
-      }
-      async function key() {
-        return await crypto.subtle.generateKey({name: "AES-GCM", length: 256}, false, ["encrypt", "decrypt"]);
-      }
-      async function encrypt(text, key) {
-        const iv = crypto.getRandomValues(new Uint8Array(12));
-        const encoded = new TextEncoder().encode(text);
-        const buffer = await crypto.subtle.encrypt({name: "AES-GCM", iv: iv, tagLength: 128}, key, encoded);
-        return {cipher: new Uint8Array(buffer), iv: iv};
-      }
-      async function decrypt(cipher, iv, key) {
-        try {
-          const buffer = await crypto.subtle.decrypt({name: "AES-GCM", iv: iv, tagLength: 128}, key, cipher);
-          return new TextDecoder().decode(buffer);
-        } catch (e) {
-          throw new Error("Data tampering or invalid key detected.");
-        }
-      }
-      function package(cipher, iv) {
-        const combined = new Uint8Array(iv.length + cipher.length);
-        combined.set(iv, 0);
-        combined.set(cipher, iv.length);
-        return btoa(String.fromCharCode(...combined));
-      }
-      function unpackage(base64) {
-        const binary = atob(base64);
-        const combined = new Uint8Array(binary.length);
-        for (let i = 0; i < binary.length; i++) {
-          combined[i] = binary.charCodeAt(i);
-        }
-        const iv = combined.slice(0, 12);
-        const cipher = combined.slice(12);
-        return [iv, cipher];
-      }
       function check() {
         let score = zxcvbn(document.querySelector("#pass").value);
         let suggestions = "";
@@ -261,8 +192,8 @@
       }
       async function request(url, method, body, headers = {}) {
         const defaults = {"Content-Type": "application/json"};
-        let response = fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)}).then(response => response.json());
-        console.log(response);
+        let response = await fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)});
+        console.log(await response.json());
       }
       document.querySelector("#user").oninput = () => {
         check();
