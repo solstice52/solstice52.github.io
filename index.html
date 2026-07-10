@@ -220,7 +220,7 @@
         }
         const iv = combined.slice(0, 12);
         const cipher = combined.slice(12);
-        return {iv: iv, cipher: cipher};
+        return [iv, cipher];
       }
       function check() {
         let score = zxcvbn(document.querySelector("#pass").value);
@@ -292,6 +292,14 @@
         }
       }
       window.onload = async () => {
+        try {
+          const token = localStorage.getItem("token");
+          const key = await load();
+          const [iv, cipher] = unpackage(token);
+          const decrypted = await decrypt(cipher, iv, key);
+        } catch (e) {
+          console.error("Load failed.", e);
+        }
         let login = await request("https://dev.maelink.net/login", "post", {setCookie: true});
         if (!login.error) {
           document.querySelector(".login").style.display = "none";
