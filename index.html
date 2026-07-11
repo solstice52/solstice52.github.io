@@ -9,6 +9,10 @@
         0% {transform: translateY(-20px); opacity: 0;}
         100% {transform: translateY(0px); opacity: 1;}
       }
+      @keyframes fade {
+        0%, 100% {opacity: 1;}
+        50% {opacity: 0;}
+      }
       body {
         background: linear-gradient(35deg, #040727, #270407);
         background-repeat: no-repeat;
@@ -59,20 +63,6 @@
         align-content: center;
         vertical-align: middle;
       }
-      .lucide-heart {
-        stroke: #faaa;
-        margin-right: 0.5em;
-      }
-      .lucide-reply {
-        stroke: #0bf;
-        margin-right: 0.5em;
-      }
-      .lucide-trash-2 {
-        stroke: #f00;
-      }
-      .lucide-square-pen {
-        stroke: #888;
-      }
       .login {
         background-color: #aaa3;
         padding: 1em;
@@ -107,13 +97,17 @@
         margin: 0;
       }
       .like {
-        background: linear-gradient(35deg, #faaa, #faca);
+        background: linear-gradient(35deg, #faa, #fac);
         background-clip: text;
         color: transparent;
         padding-inline: 0.7em;
         padding-block: 0.5em;
         margin-top: 0.8em;
         margin-right: 0.8em;
+      }
+      .lucide-heart {
+        stroke: #faa;
+        margin-right: 0.5em;
       }
       .reply {
         background: linear-gradient(35deg, #0bf, #8bf);
@@ -124,8 +118,22 @@
         margin-top: 0.8em;
         margin-right: 0.8em;
       }
+      .lucide-reply {
+        stroke: #0bf;
+        margin-right: 0.5em;
+      }
       .delete {
-        background: linear-gradient(35deg, #900, #909);
+        background: transparent;
+        padding-inline: 0.5em;
+        padding-block: 0.5em;
+        margin-top: 0.8em;
+        margin-right: 0.8em;
+      }
+      .lucide-trash-2 {
+        stroke: #d00;
+      }
+      .edit {
+        background: linear-gradient(35deg, #ccc, #ddd);
         background-clip: text;
         color: transparent;
         padding-inline: 0.5em;
@@ -133,14 +141,8 @@
         margin-top: 0.8em;
         margin-right: 0.8em;
       }
-      .edit {
-        background: linear-gradient(35deg, #888, #999);
-        background-clip: text;
-        color: transparent;
-        padding-inline: 0.5em;
-        padding-block: 0.5em;
-        margin-top: 0.8em;
-        margin-right: 0.8em;
+      .lucide-square-pen {
+        stroke: #ccc;
       }
       #errors {
         background-color: #f007;
@@ -181,6 +183,9 @@
         text-align: center;
         height: 100vw;
         background: linear-gradient(to right, #ffdeee22, #eedeff22);
+      }
+      .edited {
+        animation: 0.8s fade forwards;
       }
     </style>
   </head>
@@ -257,17 +262,27 @@
         if (post.author == author) {
           extra = `
         <button class="delete" id="dele${post.id || post.postId}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-        <button class="edit" id="edit${post.id || post.postId}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg></button>
+        <button class="edit" onclick="document.querySelector('post${post.postId}').outerHTML = '<textarea id=\'epos${post.id || post.postId}\' placeholder=\'What did you mean to say?\'>${post.content}</textarea><button onclick='request(\'https://dev.maelink.net/home\', \'patch\', {\'postId\': ${post.id || post.postId}, \'content\': document.querySelector(\'#epos${post.id || post.postId}\').value})'></button>';"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg></button>
           `;
         }
         document.querySelector("#posts").insertAdjacentHTML(pos, `
-      <div class="message" id="post${post.id || post.postId}">
+      <div class="message">
         <p class="author">${post.author} <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || "unknown"}</span></p>
-        <p class="text">${post.content}</p>
+        <p class="text" id="post${post.id || post.postId}">${post.content}</p>
         <button class="like" id="like${post.id || post.postId}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg><span>${post.likes || 0}</span></button>
         <button class="reply" id="repl${post.id || post.postId}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-reply-icon lucide-reply"><path d="M20 18v-2a4 4 0 0 0-4-4H4"/><path d="m9 17-5-5 5-5"/></svg><span>${post.reply_count || 0}</span></button>
         ${extra}
       </div>`);
+      }
+      function editPost(post) {
+        let msg = document.querySelector(`#post${post.postId}`);
+        if (msg) {
+          msg.classList.add("edited");
+          setTimeout(() => msg.textContent = post.content, 400);
+          setTimeout(() => msg.classList.remove("edited"), 800);
+        } else {
+          console.error("message not found!");
+        }
       }
       async function load() {
         let login = await request("https://dev2.maelink.net/login", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
@@ -322,6 +337,7 @@
           let data = JSON.parse(msg.data);
           if (data.type == "authenticated") author = data.username;
           if (data.type == "home:post") loadPost(data, "afterbegin");
+          if (data.type == "home:post:edit") editPost(data)
         } catch (e) {
           console.log("Data was irregular.", e, "\n", msg.data);
         }
