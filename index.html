@@ -290,6 +290,17 @@
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".container").style.display = "grid";
+          const checkSocket = () => {
+            return new Promise((resolve) => {
+              const interval = setInterval(() => {
+                if (socket.readyState == 1) {
+                  clearInterval(interval);
+                  resolve();
+                }
+              }, 100);
+            });
+          };
+          await checkSocket();
           await socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
           let posts = await request("https://dev2.maelink.net/home", "get");
           console.log("posts:", posts);
