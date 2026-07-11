@@ -66,6 +66,7 @@
         display: inline-flex;
         align-content: center;
         vertical-align: middle;
+        transition: 0.3s fill ease-out, 0.2s stroke ease-out;
       }
       .login {
         background-color: #aaa3;
@@ -232,14 +233,14 @@
       </div>
     </div>
     <div class="faq" style="text-align: center;">
-      <h2>how secure will my info be?</h2>
-      <p>the info you input here will be sent to the maelink server, where it will be hashed and therefore irreversible. the only ways your unhashed data can be stolen are you voluntarily sharing it, and an attacker intercepting/spying on your requests or screen.</p><hr>
-      <h2>should I refrain from entering my info?</h2>
-      <p>despite the text above, no. your username is only stored in the maelink database, your password strength is checked locally using zxcvbn, and everything you input in this form or any other form on this website is sent to the maelink server only.</p><hr>
-      <h2>is this client good?</h2>
+      <br><h2>is this client good?</h2>
       <p>hopefully! you can make it better by sending feedback to the developer, but ideally this client should be simple enough to navigate and be packed with as many features as possible. for now, it's still in development so not yet on that one sadly.</p><hr>
+      <h2>how secure will my info be?</h2>
+      <p>it depends on the server and socket URLs you type. the official maelink servers (which are default) hash your info, and this client uses the best and industry-standard security practices. it's all up to you and whether the servers hash your data.</p><hr>
+      <h2>where can I leave feedback?</h2>
+      <p>if you know the developer on discord, contact him there. if you don't, please send an email to scratchy271@gmail.com with the subject "Solstice Feedback."</p><hr>
     </div>
-    <h6>Built with love for v0.4.1a</h6>
+    <h6>Made with love, without vibecoding, for v0.4.1c <3</h6>
     <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.min.js"></script>
     <script>
       let server = "https://dev.maelink.net";
@@ -295,8 +296,8 @@
         let msg = document.querySelector(`#post${post.postId}`);
         if (msg) {
           let liked = JSON.parse(post.liked);
-          document.querySelector(`#losv${post.postId}`).fill = liked.includes(uuid) ? "#f00" : "currentColor";
-          document.querySelector(`#losv${post.postId}`).stroke = liked.includes(uuid) ? "#f00" : "#f77";
+          document.querySelector(`#losv${post.postId}`).style.fill = liked.includes(uuid) ? "#f00" : "currentColor";
+          document.querySelector(`#losv${post.postId}`).style.stroke = liked.includes(uuid) ? "#f00" : "#f77";
           document.querySelector(`#loco${post.postId}`).textContent = liked.length;
         } else {
           console.error("message not found");
