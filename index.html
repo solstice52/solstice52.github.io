@@ -321,27 +321,21 @@
       document.querySelector("#login").onclick = load;
       window.onload = load;
       document.addEventListener("click", function(e) {
-        console.log("function started")
         const edit = e.target.closest(".edit");
-        console.log(edit)
         if (!edit) return;
-        console.log("target found")
         const postId = edit.dataset.id;
         const post = document.querySelector(`#post${postId}`);
-        console.log("post retrieved")
         if (!post) return;
-        console.log("post confirmed")
         const textarea = document.createElement("textarea");
         textarea.id = `epos${postId}`;
         textarea.placeholder = "What did you mean to say?";
         textarea.value = post.textContent.trim(); 
         const save = document.createElement("button");
         save.innerText = "Save";
-        save.onclick = () => {request(`https://dev.maelink.net/home`, "patch", {postId: postId, content: textarea.value})};
+        save.onclick = () => {textarea.outerHTML = `<p id='${postId}'></p>`; textarea.textContent = textarea.value; save.remove(); request("https://dev.maelink.net/home", "patch", {postId: postId, content: textarea.value})};
         post.innerHTML = "";
         post.appendChild(textarea);
         post.appendChild(save);
-        console.log("functionality added")
       });
       document.querySelector("#register").onclick = async () => {
         let register = await request("https://dev2.maelink.net/register", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
