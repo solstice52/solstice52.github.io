@@ -229,6 +229,7 @@
     <h6>Built with love for v0.4.0</h6>
     <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.min.js"></script>
     <script>
+      let server = "https://dev.maelink.net";
       function check() {
         let score = zxcvbn(document.querySelector("#pass").value);
         let suggestions = "";
@@ -364,7 +365,6 @@
         server = document.querySelector("#serv").value;
       }
       let socket = new WebSocket(`wss://${server}/socket`);
-      let server = "https://dev.maelink.net";
       let author = "";
       socket.onmessage = (msg) => {
         try {
