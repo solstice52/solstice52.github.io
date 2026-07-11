@@ -137,7 +137,7 @@
         margin-right: 0.5em;
       }
       .lucide-trash-2 {
-        stroke: #f44;
+        stroke: #f45;
       }
       .edit {
         background: transparent;
@@ -295,8 +295,8 @@
         let msg = document.querySelector(`#post${post.postId}`);
         if (msg) {
           let liked = JSON.parse(post.liked);
-          document.querySelector(`#losv${post.postId}`).fill = liked.includes(author) ? "#f00" : "currentColor";
-          document.querySelector(`#losv${post.postId}`).stroke = liked.includes(author) ? "#f00" : "#f77";
+          document.querySelector(`#losv${post.postId}`).fill = liked.includes(uuid) ? "#f00" : "currentColor";
+          document.querySelector(`#losv${post.postId}`).stroke = liked.includes(uuid) ? "#f00" : "#f77";
           document.querySelector(`#loco${post.postId}`).textContent = liked.length;
         } else {
           console.error("message not found");
@@ -327,6 +327,7 @@
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".container").style.display = "grid";
+          uuid = login.user.uuid;
           const checkSocket = () => {
             return new Promise((resolve) => {
               const interval = setInterval(() => {
@@ -416,6 +417,7 @@
       }
       let socket = new WebSocket(server2);
       let author = "";
+      let uuid = "";
       socket.onmessage = (msg) => {
         try {
           console.log("Received WebSocket message:", msg);
