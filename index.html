@@ -363,8 +363,8 @@
       document.querySelector("#serv").onclick = () => {
         server = document.querySelector("#serv").value;
       }
-      let socket = new WebSocket("wss://dev.maelink.net/socket");
-      let server = `${server}`;
+      let socket = new WebSocket(`wss://${server}/socket`);
+      let server = "https://dev.maelink.net";
       let author = "";
       socket.onmessage = (msg) => {
         try {
