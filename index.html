@@ -286,7 +286,7 @@
         }
       }
       async function load() {
-        let login = await request("https://dev2.maelink.net/login", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
+        let login = await request("https://dev.maelink.net/login", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
         if (!login.error) {
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
@@ -303,7 +303,7 @@
           };
           await checkSocket();
           await socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
-          let posts = await request("https://dev2.maelink.net/home", "get");
+          let posts = await request("https://dev.maelink.net/home", "get");
           console.log("posts:", posts);
           if (!posts.error) {
             for (post of posts.posts) loadPost(post, "beforeend");
@@ -344,22 +344,22 @@
         textarea.value = post.textContent.trim(); 
         const save = document.createElement("button");
         save.innerText = "Save";
-        save.onclick = () => {let newt = textarea.value; textarea.outerHTML = `<p id='${postId}'></p>`; textarea.textContent = newt; save.remove(); request("https://dev2.maelink.net/home", "patch", {postId: postId, content: textarea.value})};
+        save.onclick = () => {let newt = textarea.value; textarea.outerHTML = `<p id='${postId}'></p>`; textarea.textContent = newt; save.remove(); request("https://dev.maelink.net/home", "patch", {postId: postId, content: textarea.value})};
         post.innerHTML = "";
         post.appendChild(textarea);
         post.appendChild(save);
       });
       document.querySelector("#register").onclick = async () => {
-        let register = await request("https://dev2.maelink.net/register", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
+        let register = await request("https://dev.maelink.net/register", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
         console.log("register:", register);
       }
       document.querySelector("#send").onclick = async () => {
         if (!document.querySelector("#msg").value.trim()) return;
-        let send = await request("https://dev2.maelink.net/home", "post", {"content": document.querySelector("#msg").value.trim(), "clientId": "Solstice"});
+        let send = await request("https://dev.maelink.net/home", "post", {"content": document.querySelector("#msg").value.trim(), "clientId": "Solstice"});
         if (!send.error) document.querySelector("#msg").value = "";
         console.log("send:", send);
       }
-      let socket = new WebSocket("wss://dev2.maelink.net/socket");
+      let socket = new WebSocket("wss://dev.maelink.net/socket");
       let author = "";
       socket.onmessage = (msg) => {
         try {
