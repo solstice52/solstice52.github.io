@@ -344,7 +344,7 @@
         textarea.value = post.textContent.trim(); 
         const save = document.createElement("button");
         save.innerText = "Save";
-        save.onclick = () => {let newt = textarea.value; textarea.outerHTML = `<p id='${postId}'></p>`; textarea.textContent = newt; save.remove(); request("https://dev.maelink.net/home", "patch", {postId: postId, content: textarea.value})};
+        save.onclick = () => {let newt = textarea.value; textarea.outerHTML = `<p id='${postId}'></p>`; textarea.textContent = newt; save.remove(); request("https://dev2.maelink.net/home", "patch", {postId: postId, content: textarea.value})};
         post.innerHTML = "";
         post.appendChild(textarea);
         post.appendChild(save);
