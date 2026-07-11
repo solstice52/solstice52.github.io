@@ -129,8 +129,8 @@
       }
       .delete {
         background: transparent;
-        width: 2em;
-        height: 2em;
+        width: fit-content;
+        aspect-ratio: 1;
         padding-inline: 0.5em;
         padding-block: 0.5em;
         margin-top: 1.5em;
@@ -141,8 +141,8 @@
       }
       .edit {
         background: transparent;
-        width: 2em;
-        height: 2em;
+        width: fit-content;
+        aspect-ratio: 1;
         padding-inline: 0.5em;
         padding-block: 0.5em;
         margin-top: 1.5em;
@@ -380,7 +380,6 @@
         const postId = del.dataset.id;
         const post = document.querySelector(`#post${postId}`);
         if (!post) return;
-        post.style.background = "#f004";
         request(`${server}/home`, "delete", {postId: postId});
       });
       document.querySelector("#register").onclick = async () => {
