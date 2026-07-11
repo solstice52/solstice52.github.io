@@ -196,6 +196,7 @@
       <h4>The revolutionary maelink client that you will adore.<br>Try it out by logging in or registering below.</h4>
       <label for="user">Username: </label><input type="text" id="user" placeholder="3 to 24 characters."><br>
       <label for="pass">Password: </label><input type="password" id="pass" placeholder="6+ characters."><button type="button" id="toggle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button><br>
+      <label for="serv">Server: </label><input type="text" id="serv" placeholder=`${server}` value=`${server}`><br>
       <input type="checkbox" id="show"><label for="show">Show problems as you type</label><br>
       <p id="zxcvbn"></p>
       <p id="errors" style="display: none;"></p>
@@ -286,7 +287,7 @@
         }
       }
       async function load() {
-        let login = await request("https://dev.maelink.net/login", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
+        let login = await request(`${server}/login`, "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
         if (!login.error) {
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
@@ -303,7 +304,7 @@
           };
           await checkSocket();
           await socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
-          let posts = await request("https://dev.maelink.net/home", "get");
+          let posts = await request(`${server}/home`, "get");
           console.log("posts:", posts);
           if (!posts.error) {
             for (post of posts.posts) loadPost(post, "beforeend");
@@ -344,22 +345,26 @@
         textarea.value = post.textContent.trim(); 
         const save = document.createElement("button");
         save.innerText = "Save";
-        save.onclick = () => {let newt = textarea.value; textarea.outerHTML = `<p id='${postId}'></p>`; textarea.textContent = newt; save.remove(); request("https://dev.maelink.net/home", "patch", {postId: postId, content: textarea.value})};
+        save.onclick = () => {let newt = textarea.value; textarea.outerHTML = `<p id='${postId}'></p>`; textarea.textContent = newt; save.remove(); request(`${server}/home`, "patch", {postId: postId, content: textarea.value})};
         post.innerHTML = "";
         post.appendChild(textarea);
         post.appendChild(save);
       });
       document.querySelector("#register").onclick = async () => {
-        let register = await request("https://dev.maelink.net/register", "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
+        let register = await request(`${server}/register`, "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
         console.log("register:", register);
       }
       document.querySelector("#send").onclick = async () => {
         if (!document.querySelector("#msg").value.trim()) return;
-        let send = await request("https://dev.maelink.net/home", "post", {"content": document.querySelector("#msg").value.trim(), "clientId": "Solstice"});
+        let send = await request(`${server}/home`, "post", {"content": document.querySelector("#msg").value.trim(), "clientId": "Solstice"});
         if (!send.error) document.querySelector("#msg").value = "";
         console.log("send:", send);
       }
+      document.querySelector("#serv").onclick = () => {
+        server = document.querySelector("#serv").value;
+      }
       let socket = new WebSocket("wss://dev.maelink.net/socket");
+      let server = `${server}`;
       let author = "";
       socket.onmessage = (msg) => {
         try {
