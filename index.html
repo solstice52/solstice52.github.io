@@ -334,7 +334,7 @@
         const textarea = document.createElement("textarea");
         textarea.id = `epos${postId}`;
         textarea.placeholder = "What did you mean to say?";
-        textarea.value = postElement.textContent.trim(); 
+        textarea.value = post.textContent.trim(); 
         const save = document.createElement("button");
         save.innerText = "Save";
         save.onclick = () => {request(`https://dev.maelink.net/home`, "patch", {postId: postId, content: textarea.value})};
