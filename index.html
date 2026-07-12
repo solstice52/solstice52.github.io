@@ -81,9 +81,17 @@
         padding-block: 0.5em;
         border-radius: 1em;
         margin-left: 1.5em;
-        margin-bottom: 0.5em;
         width: clamp(15em, 90%, 90vw);
         height: fit-content;
+      }
+      .message.home {
+        margin-bottom: 1em;
+      }
+      .message.inbox {
+        margin-bottom: 1em;
+      }
+      .message.bubbles {
+        margin-bottom: 0.5em;
       }
       .author {
         color: #bbf;
@@ -173,7 +181,8 @@
       }
       .container {
         width: 100%;
-        height: 100%;
+        min-height: 100vh;
+        min-height: 100dvh;
         display: grid;
         grid-template-areas: "sidebar main";
         grid-template-columns: 250px auto;
@@ -294,7 +303,7 @@
           post.client = "inbox";
         }
         document.querySelector("#posts").insertAdjacentHTML(pos, `
-      <div class="message" id="mess${post.id || post.postId}">
+      <div class="message ${screen}" id="mess${post.id || post.postId}">
         <p class="author">${post.author || post.sender_id} <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
         ${extra}
