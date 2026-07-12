@@ -54,7 +54,7 @@
         cursor: pointer;
       }
       button:active {
-        transform: translateY(0.2em);
+        transform: translateY(0.1em);
       }
       button:disabled {
         background-color: #737373;
@@ -224,9 +224,12 @@
         <h2 style="position: fixed; top: 89%;">Solstice</h2>
       </div>
       <div class="solstice">
-        <br><textarea type="text" id="msg" placeholder="What's on your mind today?"></textarea><br>
-        <button id="send"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button>
-        <hr style="margin-bottom: 0.5em;"><div id="posts"></div>
+        <div class="posting">
+          <br><textarea type="text" id="msg" placeholder="What's on your mind today?"></textarea><br>
+          <button id="send"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button>
+          <hr style="margin-bottom: 0.5em;">
+        </div>
+        <div id="posts"></div>
       </div>
     </div>
     <div class="faq" style="text-align: center;">
@@ -395,17 +398,18 @@
       document.querySelector("#home").onclick = async () => {
         if (screen == "home") return;
         screen = "home";
+        document.querySelector(".posting").style.display = "block";
         document.querySelector("#posts").innerHTML = "";
         let home = await request(`${server}/home`, "get");
         if (!home.error) {
-          let posts = home.posts;
           console.log("messages:", posts);
-          for (post of posts.posts) loadPost(post, "beforeend");
+          for (post of home.posts) loadPost(post, "beforeend");
         }
       }
       document.querySelector("#inbox").onclick = async () => {
         if (screen == "inbox") return;
         screen = "inbox";
+        document.querySelector(".posting").style.display = "none";
         document.querySelector("#posts").innerHTML = "";
         let inbox = await request(`${server}/inbox`, "get");
         if (!inbox.error) {
