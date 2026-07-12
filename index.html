@@ -75,7 +75,7 @@
       .message {
         text-align: left;
         background-color: #392f3f;
-        border: 1.5px solid white;
+        border: 1.5px solid #332938;
         padding-inline: 1em;
         padding-block: 0.5em;
         border-radius: 1.5em;
@@ -85,7 +85,7 @@
         height: fit-content;
       }
       .author {
-        color: #aaf;
+        color: #bbf;
         font-weight: 600;
         margin-bottom: 0.5em;
       }
@@ -146,7 +146,7 @@
         margin-right: 0.5em;
       }
       .lucide-square-pen {
-        stroke: #ccc;
+        stroke: #bbf;
       }
       #errors {
         background-color: #f007;
@@ -168,7 +168,7 @@
         left: 0px;
         width: 100%;
         height: 100%;
-        background: linear-gradient(0deg, #fff2 0%, #fff0 33%);
+        background: linear-gradient(0deg, #fff1 0%, #fff0 45%);
       }
       .container {
         width: 100%;
@@ -222,7 +222,7 @@
         <br><button id="settings"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg> Settings</button>
       </div>
       <div class="solstice">
-        <h2 style="font-family: Michroma, sans-serif; font-size: 3em; margin: 0;">Solstice</h2>
+        <h2 style="font-family: Michroma, sans-serif; font-size: 3em; margin: 0; border: none; border-top: 1px solid #332938;">Solstice</h2>
         <textarea type="text" id="msg" placeholder="What's on your mind today?"></textarea><br>
         <button id="send"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button>
         <hr style="margin-bottom: 0.5em;"><div id="posts"></div>
