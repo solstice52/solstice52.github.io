@@ -403,6 +403,7 @@
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".container").style.display = "grid";
+          screen = "home";
           if (window.mobileCheck()) {
             document.querySelector(".sidebar").style.display = "none";
             document.querySelector(".container").style.display = "block";
@@ -437,8 +438,25 @@
         return await response.json();
       }
 
+      function highlightActive() {
+        document.querySelector(".sidebar").childNodes.forEach((node) => {
+          if ((node.id || "") == screen) {
+            node.style.backgroundColor = "#866499";
+          } else if (node.id) {
+            node.style.backgroundColor = "#654d74";
+          }
+        })
+        document.querySelector(".mobileSidebar").childNodes.forEach((node) => {
+          if ((node.id || "") == screen+"M") {
+            node.style.backgroundColor = "#866499";
+          } else if (node.id) {
+            node.style.backgroundColor = "transparent";
+          }
+        })
+      }
       async function home() {
         if (screen == "home") return;
+        highlightActive();
         screen = "home";
         document.querySelector(".posting").style.display = "block";
         document.querySelector("#posts").innerHTML = "";
@@ -450,6 +468,7 @@
       }
       async function inbox() {
         if (screen == "inbox") return;
+        highlightActive();
         screen = "inbox";
         document.querySelector(".posting").style.display = "none";
         document.querySelector("#posts").innerHTML = "";
