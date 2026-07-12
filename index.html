@@ -401,6 +401,7 @@
           let posts = home.posts;
           console.log("messages:", posts);
           for (post of posts.posts) loadPost(post, "beforeend");
+        }
       }
       document.querySelector("#inbox").onclick = async () => {
         if (screen == "inbox") return;
@@ -410,6 +411,7 @@
         if (!inbox.error) {
           console.log("inbox messages:", posts);
           for (post of inbox.messages) loadPost(post, "beforeend");
+        }
       }
       
       document.addEventListener("click", (e) => {
