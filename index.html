@@ -28,6 +28,7 @@
       input[type=text], input[type=password], textarea {
         border-radius: 1em;
         font-family: Outfit, sans-serif;
+        font-size: 1.25em;
         border: 2.5px solid #4b3c54;
         width: clamp(9em, 70%, 25em);
         background-color: #36283f;
@@ -265,8 +266,8 @@
       </div>
       <div class="solstice">
         <div class="posting">
-          <br><textarea type="text" id="msg" placeholder="What's on your mind today?" style="width: calc(100% - 4em)"></textarea><br>
-          <button id="send"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button>
+          <br><textarea type="text" id="msg" placeholder="What's on your mind today?" style="width: calc(100% - 4em);"></textarea><br>
+          <button id="send" style="width: calc(100% - 1em)"><svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3629_2)"><mask id="mask0_3629_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40"><path d="M40 0H0V40H40V0Z" fill="white"/></mask><g mask="url(#mask0_3629_2)"><path d="M31.4393 9.27176C32.9953 9.14903 33.9922 10.8928 33.0965 12.1713L19.8749 31.0489C18.877 32.4739 16.6424 31.8539 16.5211 30.1186L15.8796 20.9421C15.8424 20.4103 15.5771 19.9205 15.152 19.5988L14.9095 19.4152L7.53517 14.4605C6.08326 13.485 6.67579 11.2252 8.41957 11.0877L31.4393 9.27176Z" stroke="white" stroke-width="3"/><path d="M32.684 10.4971L16.2012 20.0134" stroke="white" stroke-width="3" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3629_2"><rect width="40" height="40" fill="white"/></clipPath></defs></svg><path d="M6 12h16"/></svg></button>
           <hr style="margin-bottom: 0.5em;">
         </div>
         <div id="posts"></div>
@@ -402,7 +403,7 @@
           document.querySelector(".login").style.display = "none";
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".container").style.display = "grid";
-          if (true) { // window.mobileCheck()
+          if (window.mobileCheck()) {
             document.querySelector(".sidebar").style.display = "none";
             document.querySelector(".container").style.display = "block";
             document.querySelector(".mobileSidebar").style.display = "flex";
