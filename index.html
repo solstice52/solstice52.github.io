@@ -311,12 +311,12 @@
       function loadPost(post, pos) {
         let extra = "";
         if (post.author) {
-          let uuid = post.user_id;
+          let cache = post.user_id;
           let img = "";
-          if (sessionStorage.getItem(uuid)) {
-            img = sessionStorage.getItem(uuid) || "https://github.com/solstice52/solstice52.github.io/raw/refs/heads/main/favicon.ico";
+          if (sessionStorage.getItem(cache)) {
+            img = sessionStorage.getItem(cache) || "https://github.com/solstice52/solstice52.github.io/raw/refs/heads/main/favicon.ico";
           } else {
-            try {sessionStorage.setItem(uuid, request(`${server}/user/${uuid}`, "get").user.pfp);}
+            try {sessionStorage.setItem(cache, request(`${server}/user/${cache}`, "get").user.pfp);}
             catch (e) {console.error("could not save to session storage.", e)}
           }
           extra = `
