@@ -352,8 +352,7 @@
         }
         document.querySelector("#posts").insertAdjacentHTML(pos, `
       <div class="message ${screen}" id="mess${post.id || post.postId}">
-        <img class="pfp" src="${img}" alt="${post.author || post.sender_id}">
-        <p class="author">${post.author || post.sender_id} <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
+        <p class="author"><img class="pfp" src="${img}" alt="${post.author || post.sender_id}"> ${post.author || post.sender_id} <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
         ${extra}
       </div>`);
