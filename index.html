@@ -147,6 +147,10 @@
         margin-top: 1.5em;
         margin-right: 0.5em;
       }
+      .mobileButton {
+        width: 4em;
+        height: 4em;
+      }
       .lucide-trash-2 {
         stroke: #f45;
       }
@@ -245,7 +249,7 @@
         <h3><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3629_2)"><mask id="mask0_3629_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40"><path d="M40 0H0V40H40V0Z" fill="white"/></mask><g mask="url(#mask0_3629_2)"><path d="M31.4393 9.27176C32.9953 9.14903 33.9922 10.8928 33.0965 12.1713L19.8749 31.0489C18.877 32.4739 16.6424 31.8539 16.5211 30.1186L15.8796 20.9421C15.8424 20.4103 15.5771 19.9205 15.152 19.5988L14.9095 19.4152L7.53517 14.4605C6.08326 13.485 6.67579 11.2252 8.41957 11.0877L31.4393 9.27176Z" stroke="white" stroke-width="2"/><path d="M32.684 10.4971L16.2012 20.0134" stroke="white" stroke-width="2" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3629_2"><rect width="40" height="40" fill="white"/></clipPath></defs></svg> maelink</h3>
         <button id="home"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</button>
         <br><button id="inbox"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg> Inbox</button>
-        <br><button id="bubbles"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.9546 42.4092C17.9091 42.4092 13.9544 41.2095 10.5906 38.962C7.22691 36.7144 4.6052 33.5198 3.05705 29.7823C1.50889 26.0447 1.10382 21.9319 1.89306 17.9642C2.68231 13.9964 4.63042 10.3517 7.49103 7.4911C10.3517 4.63048 13.9963 2.68237 17.9641 1.89313C21.9319 1.10388 26.0446 1.50895 29.7822 3.05711C33.5198 4.60526 36.7143 7.22697 38.9619 10.5907C41.2095 13.9544 42.4091 17.9091 42.4091 21.9546" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M36.2728 26.0455C30.6244 26.0455 26.0455 30.6244 26.0455 36.2727C26.0455 41.9211 30.6244 46.5 36.2728 46.5C41.9212 46.5 46.5001 41.9211 46.5001 36.2727C46.5001 30.6244 41.9212 26.0455 36.2728 26.0455Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg> Bubbles</button>
+        <br><button id="bubbles"><svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.9546 42.4092C17.9091 42.4092 13.9544 41.2095 10.5906 38.962C7.22691 36.7144 4.6052 33.5198 3.05705 29.7823C1.50889 26.0447 1.10382 21.9319 1.89306 17.9642C2.68231 13.9964 4.63042 10.3517 7.49103 7.4911C10.3517 4.63048 13.9963 2.68237 17.9641 1.89313C21.9319 1.10388 26.0446 1.50895 29.7822 3.05711C33.5198 4.60526 36.7143 7.22697 38.9619 10.5907C41.2095 13.9544 42.4091 17.9091 42.4091 21.9546" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M36.2728 26.0455C30.6244 26.0455 26.0455 30.6244 26.0455 36.2727C26.0455 41.9211 30.6244 46.5 36.2728 46.5C41.9212 46.5 46.5001 41.9211 46.5001 36.2727C46.5001 30.6244 41.9212 26.0455 36.2728 26.0455Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg> Bubbles</button>
         <br><button id="settings"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg> Settings</button>
         <br><button id="logout"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg> Log out</button>
         <h2 style="position: fixed; top: 89%; z-index: 99;">Solstice</h2>
@@ -317,9 +321,9 @@
       }
       function loadPost(post, pos) {
         let extra = "";
+        let img = "";
         if (post.author) {
           let cache = post.user_id;
-          let img = "";
           if (sessionStorage.getItem(cache)) {
             img = sessionStorage.getItem(cache) || "https://github.com/solstice52/solstice52.github.io/raw/refs/heads/main/favicon.ico";
           } else {
