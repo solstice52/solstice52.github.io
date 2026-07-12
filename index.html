@@ -21,6 +21,9 @@
         background-color: #261f28;
         font-family: Outfit, sans-serif;
         color: #fefefe;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
       input[type=text], input[type=password], textarea {
         border-radius: 1em;
@@ -86,8 +89,8 @@
         padding-inline: 1em;
         padding-block: 0.5em;
         border-radius: 1em;
-        margin-left: 1.5em;
-        width: clamp(15em, 90%, 90vw);
+        margin-left: 2%;
+        width: 85%;
         height: fit-content;
       }
       .message.home {
@@ -114,6 +117,7 @@
       }
       .text {
         margin: 0;
+        font-size: 1.25em;
         white-space: pre-line;
       }
       .like {
@@ -168,6 +172,7 @@
         display: grid;
         grid-template-areas: "sidebar main";
         grid-template-columns: 250px auto;
+        flex: 1;
       }
       .sidebar {
         grid-area: sidebar;
@@ -186,16 +191,14 @@
       }
       .deleted {
         background: #f004;
-        animation: 0.8s destroy forwards;
+        animation: 0.6s destroy forwards;
       }
       .mobileSidebar {
-        position: fixed;
-        left: 0%;
-        top: calc(100% - 90px);
         width: 100%;
         height: 90px;
         background-color: #2b213a;
         justify-content: space-evenly;
+        flex-shrink: 0;
       }
       .userContainer {
         backdrop-filter: blur(13px);
@@ -260,8 +263,8 @@
       </div>
       <div class="solstice">
         <div class="posting">
-          <br><textarea type="text" id="msg" placeholder="What's on your mind today?"></textarea><br>
-          <button id="send"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button>
+          <br><textarea type="text" id="msg" placeholder="What's on your mind today?" style="width: calc(100% - 4em)"></textarea><br>
+          <button id="send"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></button>
           <hr style="margin-bottom: 0.5em;">
         </div>
         <div id="posts"></div>
@@ -288,9 +291,8 @@
       let server = "https://dev.maelink.net";
       let server2 = "wss://dev.maelink.net/socket";
       let socket = new WebSocket(server2);
-      let version = "retrieving";
-      request("https://dev.maelink.net/version", "get").then(response => version = response.apiVersion);
-      if (version !== "0.4.1c") document.querySelector(".login").insertAdjacentHTML("beforeend", "<p>Version does not match v0.4.1c. Please contact the developer unless he's already on it.</p>");
+      let version = await request("https://dev.maelink.net/version", "get");
+      if (version.apiVersion !== "0.4.1c") document.querySelector(".login").insertAdjacentHTML("beforeend", "<p>Version does not match v0.4.1c. Please contact the developer unless he's already on it.</p>");
       let screen = "home";
       let author = "";
       let uuid = "";
@@ -346,7 +348,7 @@
         }
         document.querySelector("#posts").insertAdjacentHTML(pos, `
       <div class="message ${screen}" id="mess${post.id || post.postId}">
-        <p class="author"><img class="pfp" src="${img}" alt="${post.author || post.sender_id}"> ${post.author || post.sender_id} <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
+        <p class="author" onclick="loadUser('${post.user_id}')"><img class="pfp" src="${img}" alt="${post.author || post.sender_id}"> ${post.author || post.sender_id} <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
         ${extra}
       </div>`);
@@ -381,10 +383,13 @@
         let msg = document.querySelector(`#mess${post.postId}`);
         if (msg) {
           msg.classList.add("deleted");
-          setTimeout(() => msg.remove(), 800);
+          setTimeout(() => msg.remove(), 600);
         } else {
           console.error("message not found");
         }
+      }
+      async function loadUser(uuid) {
+        
       }
       async function load() {
         let login = await request(`${server}/login`, "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
@@ -396,6 +401,7 @@
             document.querySelector(".sidebar").style.display = "none";
             document.querySelector(".container").style.display = "block";
             document.querySelector(".mobileSidebar").style.display = "flex";
+            document.querySelector(".container").style.marginLeft = "0";
           }
           uuid = login.user.uuid;
           const checkSocket = () => {
