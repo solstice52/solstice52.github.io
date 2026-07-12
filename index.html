@@ -392,7 +392,7 @@
         request(`${server}/home`, "patch", {postId: postId, like: true});
       });
 
-      document.querySelector("#home").onclick = () => {
+      document.querySelector("#home").onclick = async () => {
         if (screen == "home") return;
         screen = "home";
         document.querySelector("#posts").innerHTML = "";
@@ -402,7 +402,7 @@
           console.log("messages:", posts);
           for (post of posts.posts) loadPost(post, "beforeend");
       }
-      document.querySelector("#inbox").onclick = () => {
+      document.querySelector("#inbox").onclick = async () => {
         if (screen == "inbox") return;
         screen = "inbox";
         document.querySelector("#posts").innerHTML = "";
