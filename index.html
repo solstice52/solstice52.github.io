@@ -57,7 +57,7 @@
         transform: translateY(0.2em);
       }
       button:disabled {
-        background: linear-gradient(35deg, #789fff, #fc7cfc);
+        background-color: #737373;
         cursor: default;
       }
       svg {
@@ -357,6 +357,8 @@
           if (!posts.error) {
             for (post of posts.posts) loadPost(post, "beforeend");
           }
+        } else {
+          document.querySelector(".login").insertAdjacentHTML("beforeend", "<p>Login failed. This could be an incorrect username/password or auto-login failing. Access tokens expire after 15 minutes.</p>");
         }
       }
       async function request(url, method, body, headers = {}) {
