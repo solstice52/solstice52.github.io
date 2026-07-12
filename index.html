@@ -291,13 +291,15 @@
         ${extra}
       </div>`);
         document.querySelector(`#post${post.id || post.postId}`).textContent = post.content;
-        document.querySelector(`#losv${post.id || post.postId}`).style.fill = post.users_liked.includes(uuid) ? "#f00" : "currentColor";
-        document.querySelector(`#losv${post.id || post.postId}`).style.stroke = post.users_liked.includes(uuid) ? "#f00" : "#f77";
+        if (post.users_liked) {
+          document.querySelector(`#losv${post.id || post.postId}`).style.fill = post.users_liked.includes(uuid) ? "#f00" : "currentColor";
+          document.querySelector(`#losv${post.id || post.postId}`).style.stroke = post.users_liked.includes(uuid) ? "#f00" : "#f77";
+        }
       }
       function likePost(post) {
         let msg = document.querySelector(`#post${post.postId}`);
         if (msg) {
-          let liked = JSON.parse(post.liked);
+          let liked = JSON.parse(post.users_liked);
           document.querySelector(`#losv${post.postId}`).style.fill = liked.includes(uuid) ? "#f00" : "currentColor";
           document.querySelector(`#losv${post.postId}`).style.stroke = liked.includes(uuid) ? "#f00" : "#f77";
           document.querySelector(`#loco${post.postId}`).textContent = liked.length;
