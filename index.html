@@ -103,23 +103,28 @@
       .message.bubbles {
         margin-bottom: 0.5em;
       }
+      .text {
+        margin: 0;
+        font-size: 1.25em;
+        white-space: pre-line;
+      }
       .author {
         color: #bbf;
         font-weight: 600;
         margin-bottom: 0.5em;
         display: inline-flex;
+        font-weight: 800;
         align-items: center;
+        cursor: pointer;
         margin: 0;
+      }
+      .author:hover {
+        transform: translateY(-0.05em);
       }
       .ts {
         font-style: italic;
-        font-weight: 500;
+        font-weight: 300;
         margin-left: 1em;
-      }
-      .text {
-        margin: 0;
-        font-size: 1.25em;
-        white-space: pre-line;
       }
       .like {
         background: linear-gradient(35deg, #f77, #f7b);
@@ -128,6 +133,7 @@
         padding-inline: 0.6em;
         padding-block: 0.4em;
         font-size: 1.5em;
+        font-weight: 500;
         margin-top: 0;
         margin-right: 0.5em;
       }
@@ -142,6 +148,7 @@
         padding-inline: 0.7em;
         padding-block: 0.5em;
         font-size: 1.5em;
+        font-weight: 400;
         margin-top: 0;
         margin-right: 0.5em;
       }
@@ -181,6 +188,9 @@
         height: inherit;
         background-color: #2b213a;
       }
+      .sidebar button {
+        width: calc(100% - 2.8em);
+      }
       .solstice {
         grid-area: main;
         height: inherit;
@@ -204,6 +214,12 @@
         flex-shrink: 0;
       }
       .userContainer {
+        position: fixed;
+        left: 0%;
+        top: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: #3f3047;
         backdrop-filter: blur(13px);
       }
       .userView {
@@ -214,6 +230,17 @@
         height: 70%;
         background-color: #392f3f;
         border-radius: 2em;
+      }
+      .viewName {
+        color: #bbf;
+        font-weight: 900;
+      }
+      .viewFollowers {
+        font-style: italic;
+        font-weight: 500;
+      }
+      .viewBio {
+        white-space: pre-line;
       }
       #errors {
         background-color: #f007;
@@ -296,7 +323,7 @@
       let socket = new WebSocket(server2);
       let version = "";
       (async () => {
-        version = await request("https://dev.maelink.net/version", "get");
+        version = await request(`${server}/version`, "get");
         if (version.apiVersion !== "0.4.1c") document.querySelector(".login").insertAdjacentHTML("beforeend", "<p>Version does not match v0.4.1c. Please contact the developer unless he's already on it.</p>");
       })();
       let screen = "home";
@@ -395,7 +422,22 @@
         }
       }
       async function loadUser(uuid) {
-        
+        let user = await request(`${server}/user/${uuid}`, "get");
+        if (!user.error) {
+          document.body.insertAdjacentHTML("beforeend", `
+          <div class="userContainer">
+            <div class="userView">
+              <p class="viewName"></p>
+              <button style="float: right;" onclick="document.querySelector('.userContainer').remove()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+              <p class="viewFollowers"></p><hr>
+              <p class="viewBio"></p>
+            </div>
+          </div>
+          `);
+          document.querySelector(".viewName").textContent = user.user.username;
+          document.querySelector(".viewFollowers").textContent = `${user.user.followers.length} follower${user.user.followers.length == 1 ? "" : "s"}`;
+          document.querySelector(".viewBio").textContent = user.user.bio;
+        }
       }
       async function load() {
         let login = await request(`${server}/login`, "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
