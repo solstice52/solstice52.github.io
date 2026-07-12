@@ -456,8 +456,8 @@
       }
       async function home() {
         if (screen == "home") return;
-        highlightActive();
         screen = "home";
+        highlightActive();
         document.querySelector(".posting").style.display = "block";
         document.querySelector("#posts").innerHTML = "";
         let home = await request(`${server}/home`, "get");
@@ -468,8 +468,8 @@
       }
       async function inbox() {
         if (screen == "inbox") return;
-        highlightActive();
         screen = "inbox";
+        highlightActive();
         document.querySelector(".posting").style.display = "none";
         document.querySelector("#posts").innerHTML = "";
         let inbox = await request(`${server}/inbox`, "get");
