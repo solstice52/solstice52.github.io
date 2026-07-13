@@ -329,6 +329,11 @@
     <h6 style="text-align: right;">Made with love, without vibecoding, for v0.5.0 <3</h6>
     <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.min.js"></script>
     <script>
+      const request = async (url, method, body, headers = {}) => {
+        const defaults = {"Content-Type": "application/json"};
+        let response = await fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)});
+        return await response.json();
+      }
       const ver = async () => {return await request(`${server}/version`, "get");}
       let server = "https://dev.maelink.net";
       let server2 = "wss://dev.maelink.net/socket";
@@ -337,7 +342,7 @@
       let screen = "home";
       let author = "";
       let uuid = "";
-      if (ver().apiVersion !== "0.5.0") document.querySelector.insertAdjacentText("Version does not match v0.5.0.\n");
+      if (ver().apiVersion !== "0.5.0") document.querySelector("#login").insertAdjacentText("Version does not match v0.5.0.\n");
       const check = () => {
         let score = zxcvbn(document.querySelector("#pass").value);
         let suggestions = "";
@@ -503,12 +508,6 @@
           document.querySelector(".login").insertAdjacentHTML("beforeend", "<p>Login failed. This could be an incorrect username/password or auto-login failing. Refresh tokens expire after 30 days.</p>");
         }
       }
-      const request = async (url, method, body, headers = {}) => {
-        const defaults = {"Content-Type": "application/json"};
-        let response = await fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)});
-        return await response.json();
-      }
-
       const highlightActive = () => {
         document.querySelector(".sidebar").childNodes.forEach((node) => {
           if ((node.id || "") == screen) {
