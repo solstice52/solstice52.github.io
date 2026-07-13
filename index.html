@@ -345,7 +345,7 @@
       (async function() {
         version = await ver();
       })()
-      if (version.apiVersion !== "0.5.0beta") document.querySelector("#login").insertAdjacentText("beforeend", "Version does not match v0.5.0beta.\n");
+      if (version.apiVersion !== "0.5.0beta") {document.querySelector(".login").insertAdjacentText("beforeend", "Version does not match v0.5.0beta.\n");}
       const check = () => {
         let score = zxcvbn(document.querySelector("#pass").value);
         let suggestions = "";
