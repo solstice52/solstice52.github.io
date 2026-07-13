@@ -112,6 +112,8 @@
       }
       .author {
         color: #bbf;
+        display: flex;
+        flex-wrap: wrap;
         font-weight: 600;
         margin-bottom: 0.5em;
         display: inline-flex;
@@ -122,6 +124,9 @@
       }
       .author:hover {
         transform: translateY(-0.05em);
+      }
+      .sender {
+        font-size: 1.5em;
       }
       .ts {
         font-style: italic;
@@ -227,14 +232,17 @@
       .userView {
         position: fixed;
         padding: 3em;
-        left: calc(17% - 3em);
-        top: calc(17% - 3em);
-        width: 66%;
-        height: 66%;
+        left: calc(18% - 3em);
+        top: calc(18% - 3em);
+        width: 64%;
+        height: 64%;
         border: 2.5px solid #4b3c54;
         background-color: #392f3f;
         border-radius: 2em;
         animation: appear 0.1s forwards;
+      }
+      .userControls {
+        float: right;
       }
       .viewName {
         color: #bbf;
@@ -291,11 +299,11 @@
       <p id="zxcvbn"></p>
       <p id="errors" style="display: none;"></p>
       <button id="login">Log in</button><br>
-      <button id="register" disabled>Register</button>
+      <button id="register" disabled>Register</button><br>
     </div>
     <div class="container" style="display: none;">
       <div class="sidebar">
-        <h3><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3629_2)"><mask id="mask0_3629_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40"><path d="M40 0H0V40H40V0Z" fill="white"/></mask><g mask="url(#mask0_3629_2)"><path d="M31.4393 9.27176C32.9953 9.14903 33.9922 10.8928 33.0965 12.1713L19.8749 31.0489C18.877 32.4739 16.6424 31.8539 16.5211 30.1186L15.8796 20.9421C15.8424 20.4103 15.5771 19.9205 15.152 19.5988L14.9095 19.4152L7.53517 14.4605C6.08326 13.485 6.67579 11.2252 8.41957 11.0877L31.4393 9.27176Z" stroke="white" stroke-width="2"/><path d="M32.684 10.4971L16.2012 20.0134" stroke="white" stroke-width="2" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3629_2"><rect width="40" height="40" fill="white"/></clipPath></defs></svg> maelink</h3>
+        <h3 style="cursor: pointer; transform: translateX(-0.05em);" onclick="window.location.reload();"><svg width="40" height="40" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg> maelink</h3>
         <button id="home" style="background-color: #866499;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</button>
         <br><button id="inbox"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg> Inbox</button>
         <br><button id="bubbles"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.9546 42.4092C17.9091 42.4092 13.9544 41.2095 10.5906 38.962C7.22691 36.7144 4.6052 33.5198 3.05705 29.7823C1.50889 26.0447 1.10382 21.9319 1.89306 17.9642C2.68231 13.9964 4.63042 10.3517 7.49103 7.4911C10.3517 4.63048 13.9963 2.68237 17.9641 1.89313C21.9319 1.10388 26.0446 1.50895 29.7822 3.05711C33.5198 4.60526 36.7143 7.22697 38.9619 10.5907C41.2095 13.9544 42.4091 17.9091 42.4091 21.9546" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36.2728 26.0455C30.6244 26.0455 26.0455 30.6244 26.0455 36.2727C26.0455 41.9211 30.6244 46.5 36.2728 46.5C41.9212 46.5 46.5001 41.9211 46.5001 36.2727C46.5001 30.6244 41.9212 26.0455 36.2728 26.0455Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Bubbles</button>
@@ -306,7 +314,7 @@
       <div class="solstice">
         <div class="posting">
           <br><textarea type="text" id="msg" placeholder="What's on your mind today?" style="width: calc(100% - 4em);"></textarea><br>
-          <button id="send" style="width: calc(100% - 1em)"><svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3629_2)"><mask id="mask0_3629_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40"><path d="M40 0H0V40H40V0Z" fill="white"/></mask><g mask="url(#mask0_3629_2)"><path d="M31.4393 9.27176C32.9953 9.14903 33.9922 10.8928 33.0965 12.1713L19.8749 31.0489C18.877 32.4739 16.6424 31.8539 16.5211 30.1186L15.8796 20.9421C15.8424 20.4103 15.5771 19.9205 15.152 19.5988L14.9095 19.4152L7.53517 14.4605C6.08326 13.485 6.67579 11.2252 8.41957 11.0877L31.4393 9.27176Z" stroke="white" stroke-width="3"/><path d="M32.684 10.4971L16.2012 20.0134" stroke="white" stroke-width="3" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3629_2"><rect width="40" height="40" fill="white"/></clipPath></defs></svg><path d="M6 12h16"/></svg></button>
+          <button id="send" style="width: calc(100% - 1em)"><svg width="32" height="32" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg></button>
           <hr style="margin-bottom: 0.5em;">
         </div>
         <div id="posts"></div>
@@ -406,7 +414,7 @@
         if (user) place = document.querySelector(".viewPosts");
         place.insertAdjacentHTML(pos, `
       <div class="message ${screen}" id="mess${post.id || post.postId}">
-        <p class="author" onclick="loadUser('${post.user_id}')"><img class="pfp" src="${img}" alt="${post.author || post.sender_id}"> ${post.author || post.sender_id} <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
+        <p class="author" onclick="loadUser('${post.user_id}')"><img class="pfp" src="${img}" alt="${post.author || post.sender_id}"> <span class="sender">${post.author || post.sender_id}</span> <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
         ${extra}
       </div>`);
@@ -451,10 +459,14 @@
         document.body.insertAdjacentHTML("beforeend", `
           <div class="userContainer">
             <div class="userView">
-              <button style="float: right;" onclick="document.querySelector('.userContainer').remove()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+              <div class="userControls">
+                <button class="userFollow" onclick=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg></button>
+                <button onclick="document.querySelector('.userContainer').remove()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+              </div>
               <h1 class="viewName">Loading username...</h1>
               <p class="viewFollowers">Loading followers...</p><hr>
               <p class="viewBio" style="color: #55d;">Loading bio...</p>
+              <hr><p style="font-style: italic; font-weight: 600;">Posts from this user</p><br>
               <div class="viewPosts">Loading posts...</div>
             </div>
           </div>
@@ -466,6 +478,10 @@
           document.querySelector(".viewBio").textContent = user.user.bio ?? "I have no bio yet! Tell me to make one :3";
           document.querySelector(".viewBio").style.color = "#fefefe";
           document.querySelector(".viewPosts").innerHTML = "";
+          if (user.user.followers.includes(author)) document.querySelector(".userFollow").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-x-icon lucide-user-x"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" x2="22" y1="8" y2="13"/><line x1="22" x2="17" y1="8" y2="13"/></svg>';
+          for (upost of user.userPosts) {
+            loadPost();
+          }
         }
       }
       const load = async () => {
@@ -611,6 +627,7 @@
         const postId = edit.dataset.id;
         const post = document.querySelector(`#post${postId}`);
         if (!post) return;
+        let newt = post.textContent.trim();
         const textarea = document.createElement("textarea");
         textarea.id = `epos${postId}`;
         textarea.placeholder = "What did you mean to say?";
@@ -618,7 +635,7 @@
         const save = document.createElement("button");
         save.innerText = "Save";
         post.innerHTML = "";
-        save.onclick = () => {let newt = post.textContent.trim(); textarea.outerHTML = `<p class="text" id="post${postId}"></p>`; document.querySelector(`#post${postId}`).textContent = newt; save.remove(); request(`${server}/home`, "patch", {postId: postId, content: textarea.value.trim()})};
+        save.onclick = () => {textarea.outerHTML = `<p class="text" id="post${postId}"></p>`; document.querySelector(`#post${postId}`).textContent = newt; save.remove(); request(`${server}/home`, "patch", {postId: postId, content: textarea.value.trim()})};
         post.appendChild(textarea);
         post.appendChild(save);
       });
