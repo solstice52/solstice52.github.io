@@ -6,7 +6,7 @@
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Michroma&family=Outfit:wght@100..900&display=swap');
       @keyframes appear {
-        0% {transform: translateY(-20px); opacity: 0;}
+        0% {transform: translateY(10px); opacity: 0;}
         100% {transform: translateY(0px); opacity: 1;}
       }
       @keyframes fade {
@@ -219,17 +219,20 @@
         top: 0%;
         width: 100%;
         height: 100%;
-        background-color: #3f3047;
+        background-color: #3f304733;
         backdrop-filter: blur(13px);
       }
       .userView {
         position: fixed;
-        left: 15%;
-        top: 15%;
-        width: 70%;
-        height: 70%;
+        padding: 3em;
+        left: calc(17% - 3em);
+        top: calc(17% - 3em);
+        width: 66%;
+        height: 6%;
+        border: 2.5px solid #4b3c54;
         background-color: #392f3f;
         border-radius: 2em;
+        animation: appear 0.1s forwards;
       }
       .viewName {
         color: #bbf;
@@ -241,6 +244,8 @@
       }
       .viewBio {
         white-space: pre-line;
+        max-height: 21em;
+        overflow-y: auto;
       }
       #errors {
         background-color: #f007;
@@ -249,7 +254,11 @@
         border-radius: 1.5em;
       }
       #login {
-        margin-bottom: 0.5em;
+        margin-bottom: 1em;
+        font-size: 1.25em;
+      }
+      #register {
+        font-size: 1.25em;
       }
       #send {
         padding-inline: 5em;
@@ -272,7 +281,7 @@
       <h2 style="font-family: Michroma, sans-serif;">Welcome to Solstice.</h2>
       <h4>The revolutionary maelink client that you will adore.<br>Try it out by logging in or registering below.</h4>
       <label for="user">Username: </label><input type="text" id="user" placeholder="3 to 24 characters."><br>
-      <label for="pass">Password: </label><input type="password" id="pass" placeholder="6+ characters."><button type="button" id="toggle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button><br>
+      <label for="pass">Password: </label><input type="password" id="pass" placeholder="6+ characters."><button type="button" id="toggle"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button><br>
       <label for="serv">Server: </label><input type="text" id="serv" placeholder="https://dev.maelink.net" value="https://dev.maelink.net"><br>
       <label for="ser2">Socket: </label><input type="text" id="ser2" placeholder="wss://dev.maelink.net/socket" value="wss://dev.maelink.net/socket"><br>
       <input type="checkbox" id="show"><label for="show">Show problems as you type (for registration)</label><br>
@@ -427,8 +436,8 @@
           document.body.insertAdjacentHTML("beforeend", `
           <div class="userContainer">
             <div class="userView">
-              <p class="viewName"></p>
               <button style="float: right;" onclick="document.querySelector('.userContainer').remove()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+              <h1 class="viewName"></h1>
               <p class="viewFollowers"></p><hr>
               <p class="viewBio"></p>
             </div>
@@ -436,7 +445,7 @@
           `);
           document.querySelector(".viewName").textContent = user.user.username;
           document.querySelector(".viewFollowers").textContent = `${user.user.followers.length} follower${user.user.followers.length == 1 ? "" : "s"}`;
-          document.querySelector(".viewBio").textContent = user.user.bio;
+          document.querySelector(".viewBio").textContent = user.user.bio ?? "I have no bio yet! Tell me to make one :3";
         }
       }
       async function load() {
@@ -539,10 +548,10 @@
       document.querySelector("#toggle").onclick = () => {
         if (document.querySelector("#pass").type == "password") {
           document.querySelector("#pass").type = "text";
-          document.querySelector("#toggle").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>';
+          document.querySelector("#toggle").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>';
         } else {
           document.querySelector("#pass").type = "password";
-          document.querySelector("#toggle").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
+          document.querySelector("#toggle").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
         }
       }
       document.querySelector("#login").onclick = load;
@@ -576,7 +585,7 @@
         const save = document.createElement("button");
         save.innerText = "Save";
         post.innerHTML = "";
-        save.onclick = () => {let newt = textarea.value; textarea.outerHTML = `<p class="text" id="post${postId}"></p>`; document.querySelector(`#post${postId}`).textContent = newt; save.remove(); request(`${server}/home`, "patch", {postId: postId, content: textarea.value})};
+        save.onclick = () => {let newt = post.textContent.trim(); textarea.outerHTML = `<p class="text" id="post${postId}"></p>`; document.querySelector(`#post${postId}`).textContent = newt; save.remove(); request(`${server}/home`, "patch", {postId: postId, content: textarea.value.trim()})};
         post.appendChild(textarea);
         post.appendChild(save);
       });
