@@ -283,7 +283,7 @@
       <h2 style="font-family: Michroma, sans-serif;">Welcome to Solstice.</h2>
       <h4>The revolutionary maelink client that you will adore.<br>Try it out by logging in or registering below.</h4>
       <label for="user">Username: </label><input type="text" id="user" placeholder="3 to 24 characters."><br>
-      <label for="pass">Password: </label><input type="password" id="pass" placeholder="6+ characters."><button type="button" id="toggle"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button><br>
+      <label for="pass">Password: </label><input type="password" id="pass" placeholder="6 to 64 characters."><button type="button" id="toggle"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button><br>
       <label for="serv">Server: </label><input type="text" id="serv" placeholder="https://dev.maelink.net" value="https://dev.maelink.net"><br>
       <label for="ser2">Socket: </label><input type="text" id="ser2" placeholder="wss://dev.maelink.net/socket" value="wss://dev.maelink.net/socket"><br>
       <input type="checkbox" id="show"><label for="show">Show problems as you type (for registration)</label><br>
@@ -335,7 +335,7 @@
       let socket = "";
       (async () => {
         version = await request(`${server}/version`, "get");
-        if (version.apiVersion !== "0.4.1c") document.querySelector(".login").insertAdjacentHTML("beforeend", "<p>Version does not match v0.4.1c. Please contact the developer unless he's already on it.</p>");
+        if (version.apiVersion !== "0.5.0") document.querySelector(".login").insertAdjacentHTML("beforeend", "<p>Version does not match v0.4.1c. Please contact the developer unless he's already on it.</p>");
       })();
       let screen = "home";
       let author = "";
@@ -362,6 +362,7 @@
         if (document.querySelector("#user").value.length > 24) {errors.push("Username is longer than 24 characters<br>"); error = true;}
         if ((score.score || 0) < 3) {errors.push("Password strength is below 3/4<br>"); error = true;}
         if (document.querySelector("#pass").value.length < 6) {errors.push("Password is shorter than 6 characters<br>"); error = true;}
+        if (document.querySelector("#pass").value.length > 64) {errors.push("Password is longer than 64 characters <br>"); error = true;}
         if (!error) {
           document.querySelector("#register").disabled = false;
         } else if (document.querySelector("#show").checked) {
