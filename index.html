@@ -455,7 +455,6 @@
         }
       }
       const loadUser = async (uuid) => {
-        let user = await request(`${server}/user/${uuid}`, "get");
         document.body.insertAdjacentHTML("beforeend", `
           <div class="userContainer">
             <div class="userView">
@@ -471,6 +470,7 @@
             </div>
           </div>
           `);
+        let user = await request(`${server}/user/${uuid}`, "get");
         if (!user.error) {
           console.log("user:", user);
           document.querySelector(".viewName").textContent = user.user.username;
