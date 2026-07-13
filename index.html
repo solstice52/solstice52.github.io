@@ -248,7 +248,7 @@
         overflow-y: auto;
       }
       #errors {
-        background-color: #f007;
+        background-color: #f557;
         padding: 1em;
         text-align: center;
         border-radius: 1.5em;
@@ -359,7 +359,7 @@
         if (document.querySelector("#user").value.length < 3) {errors.push("Username is shorter than 3 characters<br>"); error = true;}
         if (document.querySelector("#user").value.length > 24) {errors.push("Username is longer than 24 characters<br>"); error = true;}
         if ((score.score || 0) < 3) {errors.push("Password strength is below 3/4<br>"); error = true;}
-        if (document.querySelector("#pass").value.length < 8) {errors.push("Password is shorter than 8 characters<br>"); error = true;}
+        if (document.querySelector("#pass").value.length < 6) {errors.push("Password is shorter than 6 characters<br>"); error = true;}
         if (!error) {
           document.querySelector("#register").disabled = false;
         } else if (document.querySelector("#show").checked) {
