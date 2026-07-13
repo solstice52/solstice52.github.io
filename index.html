@@ -107,6 +107,8 @@
         margin: 0;
         font-size: 1.25em;
         white-space: pre-line;
+        max-height: 10em;
+        overflow-y: auto;
       }
       .author {
         color: #bbf;
@@ -228,7 +230,7 @@
         left: calc(17% - 3em);
         top: calc(17% - 3em);
         width: 66%;
-        height: 6%;
+        height: 66%;
         border: 2.5px solid #4b3c54;
         background-color: #392f3f;
         border-radius: 2em;
@@ -324,7 +326,7 @@
       <h2>where can I leave feedback?</h2>
       <p>if you know the developer on discord, contact him there. if you don't, please send an email to scratchy271@gmail.com with the subject "Solstice Feedback."</p><hr>
     </div>
-    <h6 style="text-align: right;">Made with love, without vibecoding, for v0.4.1c <3</h6>
+    <h6 style="text-align: right;">Made with love, without vibecoding, for v0.5.0 <3</h6>
     <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.min.js"></script>
     <script>
       let server = "https://dev.maelink.net";
@@ -455,6 +457,7 @@
           document.querySelector(".faq").style.display = "none";
           document.querySelector(".container").style.display = "grid";
           screen = "home";
+          console.log("login:", login);
           if (window.mobileCheck()) {
             document.querySelector(".sidebar").style.display = "none";
             document.querySelector(".container").style.display = "block";
@@ -473,7 +476,7 @@
             });
           };
           await checkSocket();
-          await socket.send(JSON.stringify({"type": "auth", "token": login.accessToken}));
+          await socket.send(JSON.stringify({"type": "auth", "token": login.user.accessToken}));
           let posts = await request(`${server}/home`, "get");
           console.log("posts:", posts);
           if (!posts.error) {
