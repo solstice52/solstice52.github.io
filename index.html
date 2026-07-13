@@ -331,8 +331,8 @@
     <script>
       let server = "https://dev.maelink.net";
       let server2 = "wss://dev.maelink.net/socket";
-      let socket = new WebSocket(server2);
       let version = "";
+      let socket = "";
       (async () => {
         version = await request(`${server}/version`, "get");
         if (version.apiVersion !== "0.4.1c") document.querySelector(".login").insertAdjacentHTML("beforeend", "<p>Version does not match v0.4.1c. Please contact the developer unless he's already on it.</p>");
@@ -465,6 +465,7 @@
             document.querySelector(".container").style.marginLeft = "0";
           }
           uuid = login.user.uuid;
+          socket = new WebSocket(server2);
           const checkSocket = () => {
             return new Promise((resolve) => {
               const interval = setInterval(() => {
