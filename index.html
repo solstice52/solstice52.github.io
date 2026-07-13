@@ -466,6 +466,22 @@
           }
           uuid = login.user.uuid;
           socket = new WebSocket(server2);
+          socket.onmessage = (msg) => {
+            try {
+              console.log("Received WebSocket message:", msg);
+              let data = JSON.parse(msg.data);
+              if (data.type == "authenticated") author = data.username;
+              if (data.type == "home:post" && screen == "home") loadPost(data, "afterbegin");
+              if (data.type == "home:post:edit" && screen == "home") editPost(data);
+              if (data.type == "home:post:delete" && screen == "home") deletePost(data);
+              if (data.type == "home:post:like" && screen == "home") likePost(data);
+              if (data.type == "inbox:message" && screen == "inbox") loadPost(data, "afterbegin");
+            } catch (e) {
+              console.log("Data was irregular.", e, "\n", msg.data);
+            }
+          }
+          socket.onerror = (error) => console.error("WebSocket Error:", error);
+          socket.onclose = () => console.log("WebSocket closed.");
           const checkSocket = () => {
             return new Promise((resolve) => {
               const interval = setInterval(() => {
@@ -614,23 +630,6 @@
       document.querySelector("#ser2").oninput = () => {
         server2 = document.querySelector("#ser2").value;
       }
-      socket.onmessage = (msg) => {
-        try {
-          console.log("Received WebSocket message:", msg);
-          let data = JSON.parse(msg.data);
-          if (data.type == "authenticated") author = data.username;
-          if (data.type == "home:post" && screen == "home") loadPost(data, "afterbegin");
-          if (data.type == "home:post:edit" && screen == "home") editPost(data);
-          if (data.type == "home:post:delete" && screen == "home") deletePost(data);
-          if (data.type == "home:post:like" && screen == "home") likePost(data);
-          if (data.type == "inbox:message" && screen == "inbox") loadPost(data, "afterbegin");
-        } catch (e) {
-          console.log("Data was irregular.", e, "\n", msg.data);
-        }
-      }
-      socket.onerror = (error) => console.error("WebSocket Error:", error);
-      socket.onclose = () => console.log("WebSocket closed.");
-
       // Source - https://stackoverflow.com/a/11381730
       // Posted by Michael Zaporozhets, modified by community. See post 'Timeline' for change history
       // Retrieved 2026-07-12, License - CC BY-SA 4.0
