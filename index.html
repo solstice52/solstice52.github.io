@@ -532,8 +532,8 @@
           for (post of inbox.messages) loadPost(post, "beforeend");
         }
       }
-      async function logout() {
-        await socket.close(1000, "User logged out");
+      function logout() {
+        socket.close();
         document.querySelector(".login").style.display = "block";
         document.querySelector(".faq").style.display = "block";
         document.querySelector(".container").style.display = "none";
@@ -627,7 +627,8 @@
           console.log("Data was irregular.", e, "\n", msg.data);
         }
       }
-      socket.onerror = (error) => console.log("WebSocket Error:", error);
+      socket.onerror = (error) => console.error("WebSocket Error:", error);
+      socket.onclose = () => console.log("WebSocket closed.");
 
       // Source - https://stackoverflow.com/a/11381730
       // Posted by Michael Zaporozhets, modified by community. See post 'Timeline' for change history
