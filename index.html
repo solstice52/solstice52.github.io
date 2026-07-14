@@ -98,7 +98,10 @@
         text-align: center;
         border-radius: 2em;
       }
-      .message {
+      .bubble:hover, .author:hover {
+        transform: translateY(-0.05em);
+      }
+      .message, .bubble {
         text-align: left;
         background-color: #392f3f;
         border: 2.5px solid #4b3c54;
@@ -118,27 +121,24 @@
       .message.bubbles {
         margin-bottom: 0.5em;
       }
-      .text {
+      .text, .bubbleDescription {
         margin: 0;
         font-size: 1.25em;
         white-space: pre-line;
         max-height: 15em;
         overflow-y: auto;
       }
-      .author {
+      .author, .bubbleName {
         color: #bbf;
         display: flex;
         flex-wrap: wrap;
-        font-weight: 600;
         margin-bottom: 0.5em;
-        display: inline-flex;
         font-weight: 800;
         align-items: center;
         cursor: pointer;
         margin: 0;
       }
       .author:hover {
-        transform: translateY(-0.05em);
         text-decoration: underline;
       }
       .sender {
@@ -220,6 +220,9 @@
         background: transparent;
         margin-left: 0.5em;
       }
+      .bubbles {
+        background-color: #2b213a;
+      }
       .edited {
         animation: 0.8s fade forwards;
       }
@@ -265,7 +268,7 @@
         margin-bottom: 0;
         font-weight: 900;
       }
-      .viewFollowers {
+      .viewFollowers, .bubbleMembers {
         font-style: italic;
         font-weight: 500;
       }
@@ -273,10 +276,7 @@
         white-space: pre-line;
         margin-bottom: 0.3em;
       }
-      .editName {
-        margin: 0;
-      }
-      .editBio {
+      .editName, .editBio {
         margin: 0;
       }
       #errors {
@@ -325,7 +325,7 @@
     </div>
     <div class="container" style="display: none;">
       <div class="sidebar">
-        <h3 style="cursor: pointer; transform: translateX(-0.05em);" onclick="window.location.reload();"><svg width="40" height="40" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg> maelink</h3>
+        <h3 style="cursor: pointer; transform: translateY(-0.05em);" onclick="window.location.reload();"><svg width="40" height="40" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg> maelink</h3>
         <button id="home" style="background-color: #866499;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</button>
         <br><button id="inbox"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg> Inbox</button>
         <br><button id="bubbles"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.9546 42.4092C17.9091 42.4092 13.9544 41.2095 10.5906 38.962C7.22691 36.7144 4.6052 33.5198 3.05705 29.7823C1.50889 26.0447 1.10382 21.9319 1.89306 17.9642C2.68231 13.9964 4.63042 10.3517 7.49103 7.4911C10.3517 4.63048 13.9963 2.68237 17.9641 1.89313C21.9319 1.10388 26.0446 1.50895 29.7822 3.05711C33.5198 4.60526 36.7143 7.22697 38.9619 10.5907C41.2095 13.9544 42.4091 17.9091 42.4091 21.9546" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36.2728 26.0455C30.6244 26.0455 26.0455 30.6244 26.0455 36.2727C26.0455 41.9211 30.6244 46.5 36.2728 46.5C41.9212 46.5 46.5001 41.9211 46.5001 36.2727C46.5001 30.6244 41.9212 26.0455 36.2728 26.0455Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Bubbles</button>
@@ -342,10 +342,12 @@
         <div id="posts"></div>
       </div>
       <div class="bubbles" style="display: none;">
-        <button id="subscribed" style="background-color: #866499;">Subscribed Bubbles</button>
-        <button id="all">All Bubbles</button>
-        <h1 class="category">Subscribed Bubbles</h1>
-        <p>These are the bubbles that you are a member of.</p>
+        <div class="bubbling">
+          <button id="subscribed" style="background-color: #866499;">Subscribed</button>
+          <button id="all">All Bubbles</button>
+          <h1 class="category">Subscribed</h1>
+          <p id="description">These are the bubbles that you are a member of.</p>
+        </div>
         <div id="display"></div>
       </div>
     </div>
@@ -378,6 +380,7 @@
       let version = "";
       let socket = "";
       let screen = "home";
+      let bubble = "";
       let author = "";
       let uuid = "";
       (async function() {
@@ -443,7 +446,7 @@
         if (user) place = document.querySelector(".viewPosts");
         place.insertAdjacentHTML(pos, `
       <div class="message ${screen}" id="mess${post.id || post.postId}">
-        <p class="author" onclick="loadUser('${post.user_id}')"><img class="pfp" src="${img}" alt="${post.author || post.sender_id}"> <span class="sender">${post.author || post.sender_id}</span> <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
+        <p class="author" onclick="loadUser('${post.author}')"><img class="pfp" src="${img}" alt="${post.author || post.sender_id}"> <span class="sender">${post.author || post.sender_id}</span> <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
         ${extra}
       </div>`);
@@ -483,9 +486,9 @@
           console.error("message not found");
         }
       }
-      const loadUser = async (uuid2) => {
-        let editName = uuid == uuid2 ? '<button class="editName" onclick="editName();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg></button>' : "";
-        let editBio = uuid == uuid2 ? '<button class="editBio" onclick="editBio();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg></button>' : "";
+      const loadUser = async (usern) => {
+        let editName = usern == author ? '<button class="editName" onclick="editName();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg></button>' : "";
+        let editBio = usern == author ? '<button class="editBio" onclick="editBio();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg></button>' : "";
         document.body.insertAdjacentHTML("beforeend", `
           <div class="userContainer">
             <div class="userView">
@@ -501,7 +504,7 @@
             </div>
           </div>
           `);
-        let user = await request(`${server}/user/${uuid2}`, "get");
+        let user = await request(`${server}/user/${usern}`, "get");
         if (!user.error) {
           console.log("user:", user);
           document.querySelector(".viewName").textContent = user.user.username;
@@ -518,6 +521,22 @@
             loadPost(upost);
           }
         }
+      }
+      const loadBubble = (b, all = false) => {
+        let members = all ? `<p class="bubbleMembers" id="memb${b.uuid}"></p>` : "";
+        document.querySelector("#display").insertAdjacentHTML("beforeend", `
+        <button class="bubble" onclick="enterBubble(${b})">
+          <p class="bubbleName" id="name${b.uuid}"></p>
+          ${all}<hr>
+          <p class="bubbleDescription id="desc${b.uuid}></p>
+        </button>
+        `);
+        document.querySelector(`#name${b.uuid}`).textContent = b.name;
+        if (all) document.querySelector(`#memb${b.uuid}`).textContent = `${b.memberIDs.length} member${b.memberIDs.length == 1 ? "" : "s"}`;
+        document.querySelector(`#desc${b.uuid}`).textContent = b.description;
+      }
+      const enterBubble = (b) => {
+        document.querySelector(".bubbling").style.display = "block";
       }
       const load = async () => {
         let login = await request(`${server}/login`, "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
@@ -597,7 +616,7 @@
         let home = await request(`${server}/home`, "get");
         if (!home.error) {
           console.log("messages:", home.posts);
-          for (post of home.posts) loadPost(post, "beforeend");
+          for (post of home.posts) {loadPost(post, "beforeend");}
         }
       }
       const inbox = async () => {
@@ -608,18 +627,25 @@
         let inbox = await request(`${server}/inbox`, "get");
         if (!inbox.error) {
           console.log("inbox messages:", inbox.messages);
-          for (post of inbox.messages) loadPost(post, "beforeend");
+          for (post of inbox.messages) {loadPost(post, "beforeend");}
         }
       }
       const bubbles = async () => {
         screen = "bubbles";
+        bubble = "subscribed";
         highlightActive();
-        document.querySelector(".posting").style.display = "none";
-        document.querySelector("#posts").innerHTML = "";
+        document.querySelector(".solstice").style.display = "none";
+        document.querySelector(".bubbles").style.display = "block";
+        document.querySelector(".bubbling").style.display = "block";
+        document.querySelector("#subscribed").style.backgroundColor = "#866499";
+        document.querySelector("#all").style.backgroundColor = "#654d74";
+        document.querySelector(".category").textContent = "Subscribed";
+        document.querySelector("#description").textContent = "These are the bubbles that you are a member of.";
         document.querySelector("#display").innerHTML = "";
-        let bubbles = await request(`${server}/guilds`, "get");
+        let bubbles = await request(`${server}/guilds/subscribed`, "get");
         if (!bubbles.error) {
           console.log("bubbles:", bubbles.guilds);
+          for (b of bubbles.guilds) {loadBubble(b);}
         }
       }
       const logout = () => {
@@ -633,6 +659,8 @@
       document.querySelector("#homeM").onclick = home;
       document.querySelector("#inbox").onclick = inbox;
       document.querySelector("#inboxM").onclick = inbox;
+      document.querySelector("#bubbles").onclick = bubbles;
+      document.querySelector("#bubblesM").onclick = bubbles;
       document.querySelector("#logout").onclick = logout;
       document.querySelector("#logoutM").onclick = logout;
 
@@ -675,6 +703,7 @@
         if (newt.length < 3 || newt.length > 24) return;
         if (/[^a-zA-Z0-9-_.]/gm.test(newt)) return;
         document.querySelector(".editName").style.display = "block";
+        document.querySelector(".submitName").remove();
         document.querySelector(".viewName").outerHTML = "<h1 class='viewName'></h1>";
         document.querySelector(".viewName").textContent = newt;
         let submit = await request(`${server}/user`, "patch", {username: newt});
@@ -687,6 +716,7 @@
         let newt = document.querySelector(".viewBio").value.trim();
         if (newt.length > 1024) return;
         document.querySelector(".editBio").style.display = "block";
+        document.querySelector(".submitBio").remove();
         document.querySelector(".viewBio").outerHTML = "<p class='viewBio' style='color: #fefefe;'></p>";
         document.querySelector(".viewBio").textContent = newt;
         let submit = await request(`${server}/user`, "patch", {bio: newt});
