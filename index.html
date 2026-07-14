@@ -118,7 +118,7 @@
       .message.inbox {
         margin-bottom: 2em;
       }
-      .message.bubbles {
+      .message.bubl {
         margin-bottom: 0.5em;
       }
       .text, .bubbleDescription {
@@ -222,6 +222,7 @@
       }
       .bubbles {
         background-color: #2b213a;
+        padding: 1em;
       }
       .edited {
         animation: 0.8s fade forwards;
@@ -278,6 +279,10 @@
       }
       .editName, .editBio {
         margin: 0;
+      }
+      .bubble {
+        padding-inline: 1.5em;
+        padding-block: 1.25em;
       }
       #errors {
         background-color: #f557;
@@ -345,8 +350,8 @@
         <div class="bubbling">
           <button id="subscribed" style="background-color: #866499;">Subscribed</button>
           <button id="all">All Bubbles</button>
-          <h1 class="category">Subscribed</h1>
-          <p id="description">These are the bubbles that you are a member of.</p>
+          <h1 class="category" style="margin-bottom: 0;">Subscribed</h1>
+          <p id="description" style="margin-top: 0;">These are the bubbles that you are a member of.</p>
         </div>
         <div id="display"></div>
       </div>
@@ -527,8 +532,8 @@
         document.querySelector("#display").insertAdjacentHTML("beforeend", `
         <button class="bubble" onclick="enterBubble(${b})">
           <p class="bubbleName" id="name${b.uuid}"></p>
-          ${all}<hr>
-          <p class="bubbleDescription id="desc${b.uuid}></p>
+          ${members}<hr>
+          <p class="bubbleDescription" id="desc${b.uuid}"></p>
         </button>
         `);
         document.querySelector(`#name${b.uuid}`).textContent = b.name;
@@ -611,6 +616,8 @@
       const home = async () => {
         screen = "home";
         highlightActive();
+        document.querySelector(".solstice").style.display = "block";
+        document.querySelector(".bubbles").style.display = "none";
         document.querySelector(".posting").style.display = "block";
         document.querySelector("#posts").innerHTML = "";
         let home = await request(`${server}/home`, "get");
@@ -622,6 +629,8 @@
       const inbox = async () => {
         screen = "inbox";
         highlightActive();
+        document.querySelector(".solstice").style.display = "block";
+        document.querySelector(".bubbles").style.display = "none";
         document.querySelector(".posting").style.display = "none";
         document.querySelector("#posts").innerHTML = "";
         let inbox = await request(`${server}/inbox`, "get");
