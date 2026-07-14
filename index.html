@@ -18,21 +18,6 @@
         100% {transform: translateX(-67%); opacity: 0;}
       }
       html {
-        scrollbar-color: var(--button) var(--background-4);
-        scrollbar-width: auto;
-      }
-      html::-webkit-scrollbar {
-        width: 12px;
-      }
-      html::-webkit-scrollbar-thumb {
-        background-color: var(--button);
-        border-radius: 6px;
-        border: 2.5px solid #4b3c54;
-      }
-      html::-webkit-scrollbar-track {
-        background: var(--background-4);
-      }
-      body {
         --text: #fefefe;
         --text-light: #bbf;
         --error: #f557;
@@ -53,6 +38,21 @@
         --button-disabled: #737373;
         --button-hover: #734e8a;
         --button-active: #866499;
+        scrollbar-color: var(--button) var(--background-4);
+        scrollbar-width: auto;
+      }
+      html::-webkit-scrollbar {
+        width: 12px;
+      }
+      html::-webkit-scrollbar-thumb {
+        background-color: var(--button);
+        border-radius: 6px;
+        border: 2.5px solid #4b3c54;
+      }
+      html::-webkit-scrollbar-track {
+        background: var(--background-4);
+      }
+      body {
         background-color: #261f28;
         font-family: Outfit, sans-serif;
         color: var(--text);
@@ -303,6 +303,7 @@
       .bubble {
         padding-inline: 1.5em;
         padding-block: 1.25em;
+        margin-bottom: 1.25em;
       }
       .bubbleName {
         font-size: 1.75em;
@@ -357,11 +358,14 @@
     <div class="container" style="display: none;">
       <div class="sidebar">
         <h3 style="cursor: pointer; transform: translateY(-0.05em);" onclick="window.location.reload();"><svg width="40" height="40" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg> maelink</h3>
-        <button id="home" style="background-color: var(--button-active);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</button>
-        <br><button id="inbox"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg> Inbox</button>
-        <br><button id="bubbles"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.9546 42.4092C17.9091 42.4092 13.9544 41.2095 10.5906 38.962C7.22691 36.7144 4.6052 33.5198 3.05705 29.7823C1.50889 26.0447 1.10382 21.9319 1.89306 17.9642C2.68231 13.9964 4.63042 10.3517 7.49103 7.4911C10.3517 4.63048 13.9963 2.68237 17.9641 1.89313C21.9319 1.10388 26.0446 1.50895 29.7822 3.05711C33.5198 4.60526 36.7143 7.22697 38.9619 10.5907C41.2095 13.9544 42.4091 17.9091 42.4091 21.9546" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36.2728 26.0455C30.6244 26.0455 26.0455 30.6244 26.0455 36.2727C26.0455 41.9211 30.6244 46.5 36.2728 46.5C41.9212 46.5 46.5001 41.9211 46.5001 36.2727C46.5001 30.6244 41.9212 26.0455 36.2728 26.0455Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Bubbles</button>
-        <br><button id="settings"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg> Settings</button>
-        <br><button id="logout"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg> Log out</button>
+        <div class="normalSidebar">
+          <button id="home" style="background-color: var(--button-active);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</button>
+          <br><button id="inbox"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg> Inbox</button>
+          <br><button id="bubbles"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.9546 42.4092C17.9091 42.4092 13.9544 41.2095 10.5906 38.962C7.22691 36.7144 4.6052 33.5198 3.05705 29.7823C1.50889 26.0447 1.10382 21.9319 1.89306 17.9642C2.68231 13.9964 4.63042 10.3517 7.49103 7.4911C10.3517 4.63048 13.9963 2.68237 17.9641 1.89313C21.9319 1.10388 26.0446 1.50895 29.7822 3.05711C33.5198 4.60526 36.7143 7.22697 38.9619 10.5907C41.2095 13.9544 42.4091 17.9091 42.4091 21.9546" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36.2728 26.0455C30.6244 26.0455 26.0455 30.6244 26.0455 36.2727C26.0455 41.9211 30.6244 46.5 36.2728 46.5C41.9212 46.5 46.5001 41.9211 46.5001 36.2727C46.5001 30.6244 41.9212 26.0455 36.2728 26.0455Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Bubbles</button>
+          <br><button id="settings"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg> Settings</button>
+          <br><button id="logout"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg> Log out</button>
+        </div>
+        <div class="bubbleSidebar" style="display: none";></div>
         <h2 style="position: fixed; top: 89%; z-index: 99;">Solstice</h2>
       </div>
       <div class="solstice">
@@ -373,9 +377,14 @@
         <div id="posts"></div>
       </div>
       <div class="bubbles" style="display: none;">
+        <div class="maelinking" style="display: none;">
+          <br><textarea type="text" id="msgb" placeholder="What's on your mind today?" style="width: calc(100% - 4em);"></textarea><br>
+          <button id="sendb" style="width: calc(100% - 1em)"><svg width="32" height="32" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg></button>
+          <hr style="margin-bottom: 0.5em;">
+        </div>
         <div class="bubbling">
-          <button id="subscribed" style="background-color: var(--button-active); margin-right: 0.25em;">Subscribed</button>
-          <button id="all" style="margin-right: 0.25em;">All Bubbles</button>
+          <button id="subscribed" style="background-color: var(--button-active); margin-right: 0.25em;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg> Subscribed</button>
+          <button id="all" style="margin-right: 0.25em;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg> All Bubbles</button>
           <button id="create"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Create Bubble</button>
           <h1 class="category" style="margin-bottom: 0;">Subscribed</h1>
           <p id="description" style="margin-top: 0;">These are the bubbles that you are a member of.</p>
@@ -458,7 +467,7 @@
           document.querySelector("#errors").innerHTML = errors.join("");
         }
       }
-      const loadPost = (post, pos, user = false) => {
+      const loadPost = (post, pos, user = false, id = "posts") => {
         let extra = "";
         let img = "https://github.com/solstice52/solstice52.github.io/raw/refs/heads/main/favicon.ico";
         if (post.author) {
@@ -482,7 +491,7 @@
         if (!["home", "inbox", "bubbles"].includes(screen)) {
           screen = "home";
         }
-        let place = document.querySelector("#posts");
+        let place = document.querySelector(`#${id}`);
         if (user) place = document.querySelector(".viewPosts");
         place.insertAdjacentHTML(pos, `
       <div class="message ${screen}" id="mess${post.id || post.postId}">
@@ -566,19 +575,31 @@
         let members = all ? `<p class="bubbleMembers" id="memb${b.uuid}"></p>` : "";
         let join = all ? `<button style="float: right;" onclick="request('${server}/guilds/${b.uuid}/join', 'post');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-plus-icon lucide-square-plus"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></button>` : "";
         document.querySelector("#display").insertAdjacentHTML("beforeend", `
-        <button class="bubble" onclick="enterBubble(${b})">
+        <button class="bubble" onclick="enterBubble(${JSON.stringify(b)})">
+          ${join}
           <p class="bubbleName" id="name${b.uuid}"></p>
           ${members}<hr>
           <p class="bubbleDescription" id="desc${b.uuid}"></p>
         </button>
         `);
         document.querySelector(`#name${b.uuid}`).textContent = b.name;
-        console.log("bubble members: ", b.memberIDs, b.memberIDs.length);
         if (all) document.querySelector(`#memb${b.uuid}`).textContent = `${JSON.parse(b.memberIDs).length} member${JSON.parse(b.memberIDs).length == 1 ? "" : "s"}`;
         document.querySelector(`#desc${b.uuid}`).textContent = b.description;
       }
-      const enterBubble = (b) => {
+      const enterBubble = (json) => {
+        let b = JSON.parse(json);
+        bubble = b.name;
+        document.querySelector(".bubbling").style.display = "none";
+        document.querySelector(".normalSidebar").style.display = "none";
+        document.querySelector(".bubblsting").style.display = "block";
+        document.querySelector(".bubbleSidebar").style.display = "block";
+      }
+      const leaveBubble = () => {
+        bubble = "";
         document.querySelector(".bubbling").style.display = "block";
+        document.querySelector(".normalSidebar").style.display = "block";
+        document.querySelector(".bubblsting").style.display = "none";
+        document.querySelector(".bubbleSidebar").style.display = "none";
       }
       const load = async () => {
         let login = await request(`${server}/login`, "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
@@ -625,10 +646,6 @@
           };
           await checkSocket();
           await socket.send(JSON.stringify({"type": "auth", "token": login.user.accessToken}));
-          if (new URLSearchParams(window.location.search).get("bubbles")) {
-            bubbles();
-            return;
-          }
           let posts = await request(`${server}/home`, "get");
           console.log("posts:", posts);
           if (!posts.error) {
@@ -732,8 +749,8 @@
         document.querySelector("#description").textContent = "Create a new bubble that other people can join.";
         document.querySelector("#display").innerHTML = `
         <label for="bName">Bubble name: </label><input type="text" id="bName" placeholder="My epic bubble">
-        <label for="bDesc">Bubble description: </label><input type="text" id="bName" placeholder="My epic bubble">
-        <button onclick="let create = await request('${server}/guilds', 'post', {'name': document.querySelector('#bName').value, 'description': document.querySelector('#bDesc').value}); if (!create.error) bubbles();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Create Bubble</button>
+        <label for="bDesc">Bubble description: </label><textarea type="text" id="bDesc" placeholder="This is my maelink bubble that's very cool and epic and I like it"></textarea>
+        <button onclick="(async () => {let create = await request('${server}/guilds', 'post', {'name': document.querySelector('#bName').value, 'description': document.querySelector('#bDesc').value}); if (!create.error) bubbles();})()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Create Bubble</button>
         `;
       }
       const logout = () => {
@@ -751,6 +768,7 @@
       document.querySelector("#bubblesM").onclick = bubbles;
       document.querySelector("#subscribed").onclick = bubbles;
       document.querySelector("#all").onclick = allBubbles;
+      document.querySelector("#create").onclick = createBubble;
       document.querySelector("#logout").onclick = logout;
       document.querySelector("#logoutM").onclick = logout;
 
