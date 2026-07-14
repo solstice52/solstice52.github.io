@@ -575,16 +575,19 @@
         let members = all ? `<p class="bubbleMembers" id="memb${b.uuid}"></p>` : "";
         let join = all ? `<button style="float: right;" onclick="request('${server}/guilds/${b.uuid}/join', 'post');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-plus-icon lucide-square-plus"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></button>` : "";
         document.querySelector("#display").insertAdjacentHTML("beforeend", `
-        <button class="bubble" onclick="enterBubble(${JSON.stringify(b)})">
+        <${all ? "div" : "button"} class="bubble" id="entr${b.uuid}">
           ${join}
           <p class="bubbleName" id="name${b.uuid}"></p>
           ${members}<hr>
           <p class="bubbleDescription" id="desc${b.uuid}"></p>
-        </button>
+        </${all ? "div" : "button"}>
         `);
         document.querySelector(`#name${b.uuid}`).textContent = b.name;
         if (all) document.querySelector(`#memb${b.uuid}`).textContent = `${JSON.parse(b.memberIDs).length} member${JSON.parse(b.memberIDs).length == 1 ? "" : "s"}`;
         document.querySelector(`#desc${b.uuid}`).textContent = b.description;
+        document.querySelector(`entr${b.uuid}`).onclick = () => {
+          enterBubble(${JSON.stringify(b)});
+        }
       }
       const enterBubble = (json) => {
         let b = JSON.parse(json);
@@ -656,7 +659,7 @@
         }
       }
       const highlightActive = () => {
-        document.querySelector(".sidebar").childNodes.forEach((node) => {
+        document.querySelector(".normalSidebar").childNodes.forEach((node) => {
           if ((node.id || "") == screen) {
             node.style.backgroundColor = "var(--button-active)";
           } else if (node.id) {
