@@ -586,7 +586,7 @@
         if (all) document.querySelector(`#memb${b.uuid}`).textContent = `${JSON.parse(b.memberIDs).length} member${JSON.parse(b.memberIDs).length == 1 ? "" : "s"}`;
         document.querySelector(`#desc${b.uuid}`).textContent = b.description;
         document.querySelector(`entr${b.uuid}`).onclick = () => {
-          enterBubble(${JSON.stringify(b)});
+          enterBubble(JSON.stringify(b));
         }
       }
       const enterBubble = (json) => {
