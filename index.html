@@ -494,10 +494,8 @@
                 <button onclick="document.querySelector('.userContainer').remove()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
               </div>
               <h1 class="viewName">Loading username...</h1>
-              ${editName}
               <p class="viewFollowers">Loading followers...</p><hr>
               <p class="viewBio" style="color: #55d;">Loading bio...</p>
-              ${editBio}
               <hr><p style="font-style: italic; font-weight: 600;">Posts from this user</p><br>
               <div class="viewPosts">Loading posts...</div>
             </div>
@@ -512,6 +510,10 @@
           document.querySelector(".viewBio").style.color = "#fefefe";
           document.querySelector(".viewPosts").innerHTML = "";
           if (user.user.followers.includes(author)) document.querySelector(".userFollow").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-x-icon lucide-user-x"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" x2="22" y1="8" y2="13"/><line x1="22" x2="17" y1="8" y2="13"/></svg>';
+          if (author == user.user.username) {
+            document.querySelector(".viewName").insertAdjacentHTML("afterend", editName);
+            document.querySelector(".viewBio").insertAdjacentHTML("afterend", editBio);
+          }
           for (upost of user.userPosts) {
             loadPost(upost);
           }
