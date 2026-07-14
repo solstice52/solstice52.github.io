@@ -139,6 +139,7 @@
       }
       .author:hover {
         transform: translateY(-0.05em);
+        text-decoration: underline;
       }
       .sender {
         font-size: 1.5em;
@@ -340,13 +341,12 @@
         </div>
         <div id="posts"></div>
       </div>
-      <div class="bubbles" style="display: none;>
-        <div class="posting">
-          <br><textarea type="text" id="msg" placeholder="What's on your mind today?" style="width: calc(100% - 4em);"></textarea><br>
-          <button id="send" style="width: calc(100% - 1em)"><svg width="32" height="32" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg></button>
-          <hr style="margin-bottom: 0.5em;">
-        </div>
-        <div id="posts"></div>
+      <div class="bubbles" style="display: none;">
+        <button id="subscribed" style="background-color: #866499;">Subscribed Bubbles</button>
+        <button id="all">All Bubbles</button>
+        <h1 class="category">Subscribed Bubbles</h1>
+        <p>These are the bubbles that you are a member of.</p>
+        <div id="display"></div>
       </div>
     </div>
     <div class="mobileSidebar" style="display: none;">
@@ -495,7 +495,7 @@
               </div>
               <h1 class="viewName">Loading username...</h1>
               <p class="viewFollowers">Loading followers...</p><hr>
-              <p class="viewBio" style="color: #55d;">Loading bio...</p>
+              <p class="viewBio" style="color: #bbf;">Loading bio...</p>
               <hr><p style="font-style: italic; font-weight: 600;">Posts from this user</p><br>
               <div class="viewPosts">Loading posts...</div>
             </div>
@@ -590,7 +590,6 @@
         })
       }
       const home = async () => {
-        if (screen == "home") return;
         screen = "home";
         highlightActive();
         document.querySelector(".posting").style.display = "block";
@@ -602,7 +601,6 @@
         }
       }
       const inbox = async () => {
-        if (screen == "inbox") return;
         screen = "inbox";
         highlightActive();
         document.querySelector(".posting").style.display = "none";
@@ -611,6 +609,17 @@
         if (!inbox.error) {
           console.log("inbox messages:", inbox.messages);
           for (post of inbox.messages) loadPost(post, "beforeend");
+        }
+      }
+      const bubbles = async () => {
+        screen = "bubbles";
+        highlightActive();
+        document.querySelector(".posting").style.display = "none";
+        document.querySelector("#posts").innerHTML = "";
+        document.querySelector("#display").innerHTML = "";
+        let bubbles = await request(`${server}/guilds`, "get");
+        if (!bubbles.error) {
+          console.log("bubbles:", bubbles.guilds);
         }
       }
       const logout = () => {
@@ -665,6 +674,7 @@
         let newt = document.querySelector(".viewName").value.trim();
         if (newt.length < 3 || newt.length > 24) return;
         if (/[^a-zA-Z0-9-_.]/gm.test(newt)) return;
+        document.querySelector(".editName").style.display = "block";
         document.querySelector(".viewName").outerHTML = "<h1 class='viewName'></h1>";
         document.querySelector(".viewName").textContent = newt;
         let submit = await request(`${server}/user`, "patch", {username: newt});
@@ -676,6 +686,7 @@
       const submitBio = async (oldt) => {
         let newt = document.querySelector(".viewBio").value.trim();
         if (newt.length > 1024) return;
+        document.querySelector(".editBio").style.display = "block";
         document.querySelector(".viewBio").outerHTML = "<p class='viewBio' style='color: #fefefe;'></p>";
         document.querySelector(".viewBio").textContent = newt;
         let submit = await request(`${server}/user`, "patch", {bio: newt});
@@ -686,6 +697,7 @@
       }
       const editName = () => {
         let oldt = document.querySelector(".viewName").textContent;
+        document.querySelector(".editName").style.display = "none";
         document.querySelector(".viewName").outerHTML = "<input class='viewName' type='text' value=''>";
         document.querySelector(".viewName").value = oldt;
         document.querySelector(".viewName").insertAdjacentHTML("afterend", `<button class="submitName"><svg width="40" height="40" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg></button>`);
@@ -693,6 +705,7 @@
       }
       const editBio = () => {
         let oldt = document.querySelector(".viewBio").textContent;
+        document.querySelector(".editBio").style.display = "none";
         document.querySelector(".viewBio").outerHTML = "<textarea class='viewBio' style='color: #fefefe;'></textarea>";
         document.querySelector(".viewBio").value = oldt;
         document.querySelector(".viewBio").insertAdjacentHTML("afterend", `<button class="submitBio"><svg width="40" height="40" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg></button>`);
