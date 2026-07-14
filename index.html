@@ -573,6 +573,7 @@
         </button>
         `);
         document.querySelector(`#name${b.uuid}`).textContent = b.name;
+        console.log("bubble members: ", b.memberIDs, b.memberIDs.length);
         if (all) document.querySelector(`#memb${b.uuid}`).textContent = `${b.memberIDs.length} member${b.memberIDs.length == 1 ? "" : "s"}`;
         document.querySelector(`#desc${b.uuid}`).textContent = b.description;
       }
@@ -837,6 +838,7 @@
         console.log("send:", send);
       }
       document.addEventListener("click", (e) => {
+        document.title = "Solstice";
         like(e);
         delte(e);
         edit(e);
