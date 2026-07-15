@@ -132,14 +132,8 @@
         width: 85%;
         height: fit-content;
       }
-      .message.home {
-        margin-bottom: 2em;
-      }
-      .message.inbox {
-        margin-bottom: 2em;
-      }
-      .message.bubl {
-        margin-bottom: 0.5em;
+      .message {
+        margin-bottom: 1.25em;
       }
       .text, .bubbleDescription {
         margin: 0;
@@ -310,6 +304,12 @@
       }
       .bubbleDescription {
         white-space: pre-line;
+      }
+      .bubbleChannel {
+        background-color: transparent;
+      }
+      .bubbleChannel:hover {
+        background-color: transparent;
       }
       #errors {
         background-color: var(--error);
@@ -571,6 +571,21 @@
           }
         }
       }
+      const enterBubble = (json) => {
+        let b = JSON.parse(json);
+        bubble = b.name;
+        document.querySelector(".bubbling").style.display = "none";
+        document.querySelector(".normalSidebar").style.display = "none";
+        document.querySelector(".bubblsting").style.display = "block";
+        document.querySelector(".bubbleSidebar").style.display = "block";
+      }
+      const exitBubble = () => {
+        bubble = "";
+        document.querySelector(".bubbling").style.display = "block";
+        document.querySelector(".normalSidebar").style.display = "block";
+        document.querySelector(".bubblsting").style.display = "none";
+        document.querySelector(".bubbleSidebar").style.display = "none";
+      }
       const loadBubble = (b, all = false) => {
         let members = all ? `<p class="bubbleMembers" id="memb${b.uuid}"></p>` : "";
         let join = all ? `<button style="float: right;" onclick="request('${server}/guilds/${b.uuid}/join', 'post');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-plus-icon lucide-square-plus"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></button>` : "";
@@ -583,26 +598,14 @@
         </${all ? "div" : "button"}>
         `);
         document.querySelector(`#name${b.uuid}`).textContent = b.name;
-        if (all) document.querySelector(`#memb${b.uuid}`).textContent = `${JSON.parse(b.memberIDs).length} member${JSON.parse(b.memberIDs).length == 1 ? "" : "s"}`;
-        document.querySelector(`#desc${b.uuid}`).textContent = b.description;
-        document.querySelector(`entr${b.uuid}`).onclick = () => {
-          enterBubble(JSON.stringify(b));
+        if (all) {
+          document.querySelector(`#memb${b.uuid}`).textContent = `${JSON.parse(b.memberIDs).length} member${JSON.parse(b.memberIDs).length == 1 ? "" : "s"}`;
+        } else {
+          document.querySelector(`#entr${b.uuid}`).onclick = () => {
+            enterBubble(JSON.stringify(b));
+          }
         }
-      }
-      const enterBubble = (json) => {
-        let b = JSON.parse(json);
-        bubble = b.name;
-        document.querySelector(".bubbling").style.display = "none";
-        document.querySelector(".normalSidebar").style.display = "none";
-        document.querySelector(".bubblsting").style.display = "block";
-        document.querySelector(".bubbleSidebar").style.display = "block";
-      }
-      const leaveBubble = () => {
-        bubble = "";
-        document.querySelector(".bubbling").style.display = "block";
-        document.querySelector(".normalSidebar").style.display = "block";
-        document.querySelector(".bubblsting").style.display = "none";
-        document.querySelector(".bubbleSidebar").style.display = "none";
+        document.querySelector(`#desc${b.uuid}`).textContent = b.description;
       }
       const load = async () => {
         let login = await request(`${server}/login`, "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true, client: "Solstice"});
