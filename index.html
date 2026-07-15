@@ -418,14 +418,8 @@
       const request = async (url, method, body, headers = {}) => {
         const defaults = {"Content-Type": "application/json"};
         let response = await fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)});
-        response = await response.json();
-        if (!response.ok) {
-          document.body.insertAdjacentHTML("afterbegin", `<div class="error">
-          <button style="float: right;" onclick="this.parentElement.remove();">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-          </button>${JSON.parse(response) || "this is a fake error"}</div>`);
-        }
-        return response;
+        response = ;
+        return await response.json() || await response.text();
       }
       let server = "https://dev.maelink.net";
       let server2 = "wss://dev.maelink.net/socket";
