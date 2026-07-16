@@ -766,7 +766,7 @@
             enterBubble(JSON.stringify(b));
           }
         }
-        if (b.ownerID == uuid) {
+        if (b.ownerID == uuid && !all) {
           document.querySelector(`#bued${b.uuid}`).onclick = () => {
             document.querySelector(`#name${b.uuid}`).outerHTML = `<input type="text" id="name${b.uuid}" placeholder="My epic bubble">`;
             document.querySelector(`#desc${b.uuid}`).outerHTML = `<textarea id="desc${b.uuid}" placeholder="This is my maelink bubble that's very cool and epic and I love it"></textarea>`;
