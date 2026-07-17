@@ -968,8 +968,10 @@
           </div>
         </div>
         `);
+        updateAttachs();
         document.querySelector("#done").onclick = () => {
           if (/^a$/gmi.test(document.querySelector("#link").value)) attachments.push(document.querySelector("#link").value);
+          updateAttachs();
         }
       }
       document.querySelector("#login").onclick = load;
