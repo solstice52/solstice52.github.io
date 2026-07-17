@@ -580,9 +580,9 @@
             document.querySelector(".viewName").insertAdjacentHTML("afterend", editName);
             document.querySelector(".viewBio").insertAdjacentHTML("afterend", editBio);
           }
-          if (user.relationship.following) {document.querySelector(".following").textContent = "You are following this user";}
-          if (user.relationship.followedBy) {document.querySelector(".followed").textContent = "You are followed by this user";}
-          if (user.relationship.following) {document.querySelector(".mutual").textContent = "You have a mutual follower with this user";}
+          if (user.user.relationship.following) {document.querySelector(".following").textContent = "You are following this user";}
+          if (user.user.relationship.followedBy) {document.querySelector(".followed").textContent = "You are followed by this user";}
+          if (user.user.relationship.following) {document.querySelector(".mutual").textContent = "You have a mutual follower with this user";}
         }
       }
       const load = async () => {
