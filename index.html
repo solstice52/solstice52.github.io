@@ -759,7 +759,9 @@
               let channels2 = await request(`${server}/guild/channels/${b.uuid}`, "get");
               console.log("channels:", channels2);
               if (!channels2.error) {
+                console.log(channels2.channels);
                 for (let cha of channels2.channels) {
+                  console.log(cha, channel, chs==channel);
                   if (cha.name == channel) {for (post of cha.posts) {loadPost(post, "beforeend", false, "display");}}
                 }
               }
