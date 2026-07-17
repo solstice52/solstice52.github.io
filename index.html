@@ -512,7 +512,7 @@
       <div class="message ${screen}" id="mess${post.id || post.postId}" style="background-color: var(--background-2);">
         <p class="author" onclick="loadUser('${post.author.username || post.author.senderId}')"><img class="pfp" src="${img}" alt="${post.author.username || post.senderId}"> <span class="sender">${post.author.username || post.senderId}</span> <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
-        ${extra}
+        <div style="width: fit-content; margin-left: auto;">${extra}</div>
       </div>`);
         document.querySelector(`#post${post.id || post.postId}`).textContent = post.content;
         if (post.usersLiked) {
