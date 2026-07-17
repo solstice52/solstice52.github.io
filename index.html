@@ -508,7 +508,7 @@
         let place = document.querySelector(`#${id}`);
         if (user) place = document.querySelector(".viewPosts");
         place.insertAdjacentHTML(pos, `
-      <div class="message ${screen}" id="mess${post.id || post.postId}">
+      <div class="message ${screen}" id="mess${post.id || post.postId}" style="background-color: var(--background-2);">
         <p class="author" onclick="loadUser('${post.author.username || post.author.senderId}')"><img class="pfp" src="${img}" alt="${post.author.username || post.senderId}"> <span class="sender">${post.author.username || post.senderId}</span> <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
         ${extra}
@@ -562,9 +562,9 @@
               <h1 class="viewName">Loading username...</h1>
               <p class="viewFollowers">Loading followers...</p><hr>
               <p class="viewBio" style="color: var(--text-light);">Loading bio...</p>
-              <hr><p class="following" style="font-style: italic; font-weight: 600;"></p><br>
-              <p class="followed" style="font-style: italic; font-weight: 600;"></p><br>
-              <p class="mutual" style="font-style: italic; font-weight: 600;"></p><br>
+              <hr><p class="following" style="font-style: italic; font-weight: 600;">You are not following this user</p>
+              <p class="followed" style="font-style: italic; font-weight: 600;"> You are not followed by this user</p>
+              <p class="mutual" style="font-style: italic; font-weight: 600;">You have no mutual followers with this user</p>
             </div>
           </div>
           `);
@@ -934,6 +934,7 @@
         }
       }
       document.querySelector("#send").onclick = sendmsg;
+      document.querySelector("#sendb").onclick = sendmsgb;
       document.querySelector("#login").onclick = load;
       document.querySelector("#register").onclick = async () => {
         let register = await request(`${server}/register`, "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
