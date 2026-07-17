@@ -606,6 +606,7 @@
             try {
               console.log("Received WebSocket message:", msg);
               let data = JSON.parse(msg.data);
+              console.log(bubble, data.guildId, bubble == data.guildId)
               if (data.type == "authenticated") author = data.username;
               if (data.type == "home:post" && screen == "home") loadPost(data, "afterbegin");
               if (data.type == "home:post:edit" && screen == "home") editPost(data);
