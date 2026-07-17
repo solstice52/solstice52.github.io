@@ -259,7 +259,7 @@
         justify-content: space-evenly;
         flex-shrink: 0;
       }
-      .userContainer {
+      .userContainer, .attachmentContainer {
         position: fixed;
         left: 0%;
         top: 0%;
@@ -268,7 +268,7 @@
         background-color: var(--background-5);
         backdrop-filter: blur(13px);
       }
-      .userView {
+      .userView, .attachmentContainer {
         position: fixed;
         padding: 3em;
         left: calc(18% - 3em);
@@ -375,7 +375,8 @@
       </div>
       <div class="solstice">
         <div class="posting">
-          <br><textarea type="text" id="msg" placeholder="What's on your mind today?" style="width: calc(100% - 4em);"></textarea><br>
+          <br><textarea type="text" id="msg" placeholder="What's on your mind today?" style="width: calc(100% - 4em);"></textarea>
+          <button id="attach"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paperclip-icon lucide-paperclip"><path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/></svg></button><br>
           <button id="send" style="width: calc(100% - 1em)"><svg width="32" height="32" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg></button>
           <hr style="margin-bottom: 0.5em;">
         </div>
@@ -383,7 +384,8 @@
       </div>
       <div class="bubbles" style="display: none;">
         <div class="maelinking" onclick="" style="display: none;">
-          <br><textarea type="text" id="msgb" placeholder="What's on your mind today?" style="width: calc(100% - 4em);"></textarea><br>
+          <br><textarea type="text" id="msgb" placeholder="What's on your mind today?" style="width: calc(100% - 4em);"></textarea>
+          <button id="attachb"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paperclip-icon lucide-paperclip"><path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551"/></svg></button><br><br>
           <button id="sendb" style="width: calc(100% - 1em)"><svg width="32" height="32" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg></button>
           <hr style="margin-bottom: 0.5em;">
         </div>
@@ -439,6 +441,7 @@
       let channel = "";
       let author = "";
       let uuid = "";
+      let attachments = [];
       (async function() {
         version = await ver();
       })()
@@ -794,7 +797,7 @@
         `);
         document.querySelector(`#name${b.uuid}`).textContent = b.name;
         if (all) {
-          document.querySelector(`#memb${b.uuid}`).textContent = `${JSON.parse(b.memberIDs).length} member${JSON.parse(b.memberIDs).length == 1 ? "" : "s"}`;
+          document.querySelector(`#memb${b.uuid}`).textContent = `${JSON.parse(b.memberIds).length} member${JSON.parse(b.memberIds).length == 1 ? "" : "s"}`;
         } else {
           document.querySelector(`#entr${b.uuid}`).onclick = () => {
             enterBubble(JSON.stringify(b));
@@ -917,6 +920,24 @@
         if (!send.error) document.querySelector("#msgb").value = "";
         console.log("send bubble:", send);
       }
+      const updateAttachs = () => {
+        let at = "";
+        let at2 = "";
+        let atdel = "";
+        document.querySelector("#allAttachments").innerHTML = "";
+        for (let a of attachments) {
+          at = document.createElement("div");
+          at.class = "attachment";
+          atlink = document.createElement("p");
+          atlink.textContent = a;
+          atdelt = document.createElement("button");
+          atdelt.style.float = "right";
+          atdelt.onclick = () => {this.parentElement.remove();}
+          at.appendChild(atdelt);
+          at.appendChild(atlink);
+          document.querySelector("#allAttachments").appendChild(at);
+        }
+      }
       document.addEventListener("click", (e) => {
         document.title = "Solstice";
         like(e);
@@ -936,6 +957,21 @@
       }
       document.querySelector("#send").onclick = sendmsg;
       document.querySelector("#sendb").onclick = sendmsgb;
+      document.querySelector("#attach").onclick = () => {
+        document.body.insertAdjacentHTML("beforeend", `
+        <div class="attachmentContainer">
+          <div class="attachmentView">
+            <button style="float: right;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+            <label>Attachment URL: </label><input type="text" id="link" placeholder="https://files.catbox.moe/scgwe0.mp4">
+            <button id="done"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg></button>
+            <div id="allAttachments"></div>
+          </div>
+        </div>
+        `);
+        document.querySelector("#done").onclick = () => {
+          if (/^a$/gmi.test(document.querySelector("#link").value)) attachments.push(document.querySelector("#link").value);
+        }
+      }
       document.querySelector("#login").onclick = load;
       document.querySelector("#register").onclick = async () => {
         let register = await request(`${server}/register`, "post", {username: document.querySelector("#user").value, password: document.querySelector("#pass").value, setCookie: true});
