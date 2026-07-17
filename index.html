@@ -1023,7 +1023,7 @@
         updateAttachs();
         document.querySelector("#done").onclick = () => {
           let link = attachments.push(document.querySelector("#link").value.trim());
-          if (checkAttach(link) && !attachments.includes(link) attachments.push(link);
+          if (checkAttach(link) && !attachments.includes(link)) attachments.push(link);
           updateAttachs();
         }
       }
