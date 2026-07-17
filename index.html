@@ -123,6 +123,7 @@
       .error {
         width: 100%;
         height: fit-content;
+        padding-inline: 1em;
         background-color: var(--error);
       }
       button:hover, .bubble:hover, .author:hover {
@@ -521,7 +522,6 @@
         let msg = document.querySelector(`#post${post.postId}`);
         if (msg) {
           let liked = JSON.parse(post.usersLiked);
-          console.log(liked, liked.includes(uuid));
           document.querySelector(`#losv${post.postId}`).style.fill = liked.includes(uuid) ? "#f00" : "currentColor";
           document.querySelector(`#losv${post.postId}`).style.stroke = liked.includes(uuid) ? "#f00" : "var(--like-start)";
           document.querySelector(`#loco${post.postId}`).textContent = liked.length;
@@ -760,7 +760,6 @@
               let channels2 = await request(`${server}/guild/channels/${b.uuid}`, "get");
               console.log("channels:", channels2);
               if (!channels2.error) {
-                console.log(channels2.channels);
                 for (let cha of channels2.channels) {
                   if (cha.id == channel) {for (post of cha.posts) {loadPost(post, "beforeend", "display");}}
                 }
