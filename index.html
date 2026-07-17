@@ -758,7 +758,7 @@
               channel = chan.name;
               let channels2 = await request(`${server}/guild/channels/${b.uuid}`, "get");
               if (!channels2.error) {
-                for (cha of channels2) {
+                for (cha of channels2.channels) {
                   if (cha.name == channel) {for (post of cha.posts) {loadPost(post, "beforeend", false, "display");}}
                 }
               }
