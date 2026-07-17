@@ -481,7 +481,7 @@
           document.querySelector("#errors").innerHTML = errors.join("");
         }
       }
-      const loadPost = (post, pos, user = false, id = "posts") => {
+      const loadPost = (post, pos, id = "posts") => {
         let extra = "";
         let img = "https://github.com/solstice52/solstice52.github.io/raw/refs/heads/main/favicon.ico";
         if (post.author && id == "posts") {
@@ -505,9 +505,7 @@
         if (!["home", "inbox", "bubbles"].includes(screen)) {
           screen = "home";
         }
-        let place = document.querySelector(`#${id}`);
-        if (user) place = document.querySelector(".viewPosts");
-        place.insertAdjacentHTML(pos, `
+        document.querySelector(`#${id}`).insertAdjacentHTML(pos, `
       <div class="message ${screen}" id="mess${post.id || post.postId}" style="background-color: var(--background-2);">
         <p class="author" onclick="loadUser('${post.author.username || post.author.senderId}')"><img class="pfp" src="${img}" alt="${post.author.username || post.senderId}"> <span class="sender">${post.author.username || post.senderId}</span> <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
@@ -606,13 +604,12 @@
             try {
               console.log("Received WebSocket message:", msg);
               let data = JSON.parse(msg.data);
-              console.log(bubble, data.guildId, bubble == data.guildId)
               if (data.type == "authenticated") author = data.username;
               if (data.type == "home:post" && screen == "home") loadPost(data, "afterbegin");
               if (data.type == "home:post:edit" && screen == "home") editPost(data);
               if (data.type == "home:post:delete" && screen == "home") deletePost(data);
               if (data.type == "home:post:like" && screen == "home") likePost(data);
-              if (data.type == "guild:post" && screen == "bubbles" && bubble == data.guildId) loadPost(data, "afterbegin");
+              if (data.type == "guild:post" && screen == "bubbles" && bubble == data.guildId) loadPost(data, "afterbegin", "display");
               if (data.type == "inbox:message" && screen == "inbox") loadPost(data, "afterbegin");
             } catch (e) {
               console.log("Data was irregular.", e, "\n", msg.data);
@@ -764,10 +761,13 @@
               if (!channels2.error) {
                 console.log(channels2.channels);
                 for (let cha of channels2.channels) {
-                  if (cha.id == channel) {for (post of cha.posts) {loadPost(post, "beforeend", false, "display");}}
+                  if (cha.id == channel) {for (post of cha.posts) {loadPost(post, "beforeend", "display");}}
                 }
               }
             }
+          }
+          for (let cha of channels.channels) {
+            if (cha.id == channel) {for (post of cha.posts) {loadPost(post, "beforeend", "display");}}
           }
         }
       }
