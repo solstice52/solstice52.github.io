@@ -120,6 +120,14 @@
         text-align: center;
         border-radius: 2em;
       }
+      .attachment {
+        background-color: var(--background-4);
+        border: 2px solid var(--input-border);
+        padding-inline: 0.5em;
+        padding-block: 0.25em;
+        margin-bottom: 1.5em;
+        border-radius: 1em;
+      }
       .error {
         width: 100%;
         height: fit-content;
@@ -277,7 +285,7 @@
         height: 64%;
         border: 2.5px solid var(--input-border);
         background-color: var(--background-2);
-        border-radius: 2em;
+        border-radius: 1em;
         animation: appear 0.1s forwards;
       }
       .userControls {
@@ -512,12 +520,20 @@
       <div class="message ${screen}" id="mess${post.id || post.postId}" style="background-color: var(--background-2);">
         <p class="author" onclick="loadUser('${post.author.username || post.author.senderId}')"><img class="pfp" src="${img}" alt="${post.author.username || post.senderId}"> <span class="sender">${post.author.username || post.senderId}</span> <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
-        <div style="width: fit-content; margin-left: auto;">${extra}</div>
+        <div style="width: fit-content; margin-left: auto;">${extra}</div><br>
+        <div id="atch${post.id || post.postId}"></div>
       </div>`);
         document.querySelector(`#post${post.id || post.postId}`).textContent = post.content;
         if (post.usersLiked) {
           document.querySelector(`#losv${post.id || post.postId}`).style.fill = post.usersLiked.includes(uuid) ? "#f00" : "currentColor";
           document.querySelector(`#losv${post.id || post.postId}`).style.stroke = post.usersLiked.includes(uuid) ? "#f00" : "var(--like-start)";
+        }
+        for (let att of post.attachments) {
+          let imgrl = document.createElement("img");
+          imgrl.style.minWidth = "360px";
+          imgrl.style.minHeight = "360px";
+          imgrl.src = att;
+          document.querySelector(`#atch${post.id || post.postId}`).appendChild(imgrl);
         }
       }
       const likePost = (post) => {
@@ -784,7 +800,7 @@
       }
       const loadBubble = (b, all = false) => {
         let members = all ? `<p class="bubbleMembers" id="memb${b.uuid}"></p>` : "";
-        let join = `<button style="float: right;" onclick="request('${server}/guild/${b.uuid}/join', 'post');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-plus-icon lucide-square-plus"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg> Join</button>`;
+        let join = b.memberIds.includes(uuid) ? `<button style="float: right;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg> Joined</button>` : `<button style="float: right;" onclick="request('${server}/guild/${b.uuid}/join', 'post');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-plus-icon lucide-square-plus"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg> Join</button>`;
         let leave = b.ownerID == uuid ? `<div style="float: right;"><button id="bued${b.uuid}" style="margin-right: 0.5em;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg> Edit</button><button onclick="request('${server}/guild/${b.uuid}', 'delete');"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete</button></div>` : `<button style="float: right;" onclick="(async () => {let leave = await request('${server}/guild/${b.uuid}/leave', 'delete'); if (!leave.error) this.parentElement.remove();})()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-right-exit-icon lucide-square-arrow-right-exit"><path d="M10 12h11"/><path d="m17 16 4-4-4-4"/><path d="M21 6.344V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1.344"/></svg> Leave</button>`;
         document.querySelector("#display").insertAdjacentHTML("beforeend", `
         <div class="bubble" id="entr${b.uuid}">
@@ -908,16 +924,56 @@
         document.querySelector(".submitBio").onclick = () => {submitBio(document.querySelector(".viewBio").value)}
       }
       const sendmsg = async () => {
-        if (!document.querySelector("#msg").value.trim()) return;
-        let send = await request(`${server}/home`, "post", {"content": document.querySelector("#msg").value.trim(), "clientId": "Solstice"});
-        if (!send.error) document.querySelector("#msg").value = "";
+        if (!(document.querySelector("#msg").value.trim() || attachments.length > 0)) return;
+        let send = await request(`${server}/home`, "post", {"content": document.querySelector("#msg").value.trim(), attachments: attachments, "clientId": "Solstice"});
+        if (!send.error) {
+          document.querySelector("#msg").value = "";
+          attachments = [];
+        }
         console.log("send:", send);
       }
       const sendmsgb = async () => {
-        if (!document.querySelector("#msgb").value.trim()) return;
-        let send = await request(`${server}/guild/${bubble}/${channel}`, "post", {"content": document.querySelector("#msgb").value.trim(), "clientId": "Solstice"});
-        if (!send.error) document.querySelector("#msgb").value = "";
+        if (!(document.querySelector("#msg").value.trim() || attachments.length > 0)) return;
+        let send = await request(`${server}/guild/${bubble}/${channel}`, "post", {"content": document.querySelector("#msgb").value.trim(), attachments: attachments, "clientId": "Solstice"});
+        if (!send.error) {
+          document.querySelector("#msgb").value = "";
+          attachments = [];
+        }
         console.log("send bubble:", send);
+      }
+      const checkAttach = (url) => {
+        try {
+          const url = new URL(url);
+          const path = url.pathname.toLowerCase();
+          const ext = [
+            // Thanks to CloudConvert for the list of 204 file formats they support.
+            // archive
+            "7z", "ace", "alz", "arc", "arj", "bz", "bz2", "cab", "cpio", "deb", "dmg", "gz", "img", "iso", "jar", "lha", "lz", "lzma", "lzo", "rar", "rpm", "rz", "tar", "tar.7z", "tar.bz", "tar.bz2", "tar.gz", "tar.lzo", "tar.xz", "tar.z", "tbz", "tbz2", "tgz", "tz", "tzo", "xz", "z", "zip",
+            // audio
+            "aac", "aa3", "aif", "aifc", "aiff", "amr", "au", "caf", "dss", "flac", "m4a", "m4b", "mp3", "oga", "opus", "voc", "wav", "weba", "wma",
+            // cad
+            "dwf", "dwg", "dxf",
+            // document
+            "abw", "djvu", "doc", "docm", "docx", "dot", "dotx", "html", "hwp", "lwp", "md", "odt", "pages", "pdf", "rst", "rtf", "tex", "txt", "wpd", "wps", "zabw",
+            // ebook
+            "azw", "azw3", "azw4", "cbc", "cbr", "cbz", "chm", "epub", "fb2", "htm", "htmlz", "lit", "lrf", "mobi", "pdb", "pml", "prc", "rb", "snb", "tcr", "txtz",
+            // font
+            "eot", "otf", "ttf", "woff", "woff2",
+            // image
+            "3fr", "arw", "avif", "bmp", "cr2", "cr3", "crw", "dcr", "dng", "eps", "erf", "gif", "heic", "heif", "icns", "ico", "jfif", "jpeg", "jpg", "mos", "mrw", "nef", "odd", "odg", "orf", "pef", "png", "ppm", "ps", "psb", "psd", "pub", "raf", "raw", "rw2", "tga", "tif", "tiff", "webp", "x3f", "xcf", "xps",
+            // presentation
+            "dps", "key", "odp", "pot", "potx", "pps", "ppsx", "ppt", "pptm", "pptx",
+            // spreadsheet
+            "csv", "et", "numbers", "ods", "xls", "xlsm", "xlsx",
+            // vector
+            "ai", "cdr", "cgm", "emf", "sk", "sk1", "svg", "svgz", "vsd", "wmf",
+            // video
+            "3g2", "3gp", "3gpp", "avi", "cavs", "dv", "dvr", "flv", "m2ts", "m4v", "mkv", "mod", "mov", "mp4", "mpeg", "mpg", "mts", "mxf", "ogg", "ogv", "rm", "rmvb", "swf", "ts", "vob", "webm", "wmv", "wtv",
+          ];
+          return ext.some(ex => path.endsWith(ex));
+        } catch (error) {
+          return false;
+        }
       }
       const updateAttachs = () => {
         let at = "";
@@ -929,7 +985,7 @@
           at.classList = "attachment";
           atlink = document.createElement("p");
           atlink.textContent = a;
-          at.insertAdjacentHTML("afterbegin", `<button style="float: right;" onclick="attachments.splice(attachments.indexOf(this.parentElement.querySelector('p').textContent)); this.parentElement.remove();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>`);
+          at.insertAdjacentHTML("afterbegin", `<button style="float: right;" onclick="attachments.splice(attachments.indexOf(this.parentElement.querySelector('p').textContent)); updateAttachs();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>`);
           at.appendChild(atlink);
           document.querySelector("#allAttachments").appendChild(at);
         }
@@ -957,7 +1013,7 @@
         document.body.insertAdjacentHTML("beforeend", `
         <div class="attachmentContainer">
           <div class="attachmentView">
-            <button style="float: right;" onclick="document.querySelector(".attachmentContainer").remove();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+            <button style="float: right;" onclick="document.querySelector('.attachmentContainer').remove();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
             <label>Attachment URL: </label><input type="text" id="link" placeholder="https://files.catbox.moe/scgwe0.mp4">
             <button id="done"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg></button>
             <div id="allAttachments"></div>
@@ -966,7 +1022,8 @@
         `);
         updateAttachs();
         document.querySelector("#done").onclick = () => {
-          if (/^a$/gmi.test(document.querySelector("#link").value)) attachments.push(document.querySelector("#link").value);
+          let link = attachments.push(document.querySelector("#link").value.trim();
+          if (checkAttach(link) && !attachments.includes(link) attachments.push(link);
           updateAttachs();
         }
       }
