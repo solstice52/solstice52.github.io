@@ -753,7 +753,7 @@
             document.querySelector(`#chan${chan.id}`).onclick = async () => {
               document.querySelector("#display").innerHTML = "";
               channel = chan.name;
-              let posts2 = await request(`${server}/guild/${b.uuid}/${chan.id}`, "get");
+              let posts2 = await request(`${server}/guild/channels/${b.uuid}/${chan.id}`, "get");
               if (!posts2.error) {
                 for (post of posts) {
                   loadPost(post, "beforeend", false, "display");
@@ -761,7 +761,7 @@
               }
             }
           }
-          let posts = await request(`${server}/guild/${b.uuid}/${chan.id}`, "get");
+          let posts = await request(`${server}/guild/channels/${b.uuid}/${chan.id}`, "get");
           if (!posts.error) {
             for (post of posts) {
               loadPost(post, "beforeend", false, "display");
