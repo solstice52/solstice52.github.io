@@ -177,7 +177,6 @@
         font-size: 1.5em;
         font-weight: 500;
         margin-top: 0;
-        margin-right: 0.5em;
       }
       .lucide-heart {
         stroke: var(--like-start);
@@ -192,7 +191,6 @@
         font-size: 1.5em;
         font-weight: 400;
         margin-top: 0;
-        margin-right: 0.5em;
       }
       .lucide-reply {
         stroke: var(--reply-start);
@@ -204,7 +202,6 @@
         height: 4em;
         padding: 0.5em;
         margin-top: 0;
-        margin-right: 0.5em;
       }
       .mobileButton {
         margin-top: 1.5em;
@@ -382,7 +379,7 @@
         <div id="posts"></div>
       </div>
       <div class="bubbles" style="display: none;">
-        <div class="maelinking" style="display: none;">
+        <div class="maelinking" onclick="" style="display: none;">
           <br><textarea type="text" id="msgb" placeholder="What's on your mind today?" style="width: calc(100% - 4em);"></textarea><br>
           <button id="sendb" style="width: calc(100% - 1em)"><svg width="32" height="32" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3220_14)"><mask id="mask0_3220_14" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="90" height="90"><path d="M90 0H0V90H90V0Z" fill="white"/></mask><g mask="url(#mask0_3220_14)"><path d="M70.7387 20.8615C74.2397 20.5853 76.4828 24.5088 74.4675 27.3854L44.7189 69.8601C42.4735 73.0662 37.4457 71.6712 37.1728 67.7668L35.7294 47.1197C35.6457 45.9231 35.0489 44.8211 34.0924 44.0973L33.5468 43.6843L16.9545 32.5362C13.6877 30.3412 15.0209 25.2568 18.9444 24.9473L70.7387 20.8615Z" stroke="white" stroke-width="5"/><path d="M73.539 23.6187L36.4526 45.0303" stroke="white" stroke-width="5" stroke-linecap="round"/></g></g><defs><clipPath id="clip0_3220_14"><rect width="90" height="90" fill="white"/></clipPath></defs></svg></button>
           <hr style="margin-bottom: 0.5em;">
@@ -423,7 +420,7 @@
           document.body.insertAdjacentHTML("afterbegin", `
           <div class="error">
             <button style="float: right;" onclick="this.parentElement.remove();"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-            <p>Error: ${text}</p>
+            <p>Error: ${JSON.stringify(text)}</p>
           </div>
           `);
         }
@@ -486,12 +483,12 @@
         let extra = "";
         let img = "https://github.com/solstice52/solstice52.github.io/raw/refs/heads/main/favicon.ico";
         if (post.author) {
-          let cache = post.user_id;
+          let cache = post.userId;
           extra = `
           <button class="like" data-id="${post.id || post.postId}"><svg id="losv${post.id || post.postId}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-icon lucide-heart"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg><span id="loco${post.id || post.postId}">${post.likes || 0}</span></button>
           <button class="reply" data-id="${post.id || post.postId}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-reply-icon lucide-reply"><path d="M20 18v-2a4 4 0 0 0-4-4H4"/><path d="m9 17-5-5 5-5"/></svg><span id="reco${post.id || post.postId}">${post.reply_count || 0}</span></button>
           `;
-          if (post.author == author) {
+          if (post.author.username == author) {
             extra += `
               <button class="delete" data-id="${post.id || post.postId}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
               <button class="edit" data-id="${post.id || post.postId}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg></button>
@@ -510,7 +507,7 @@
         if (user) place = document.querySelector(".viewPosts");
         place.insertAdjacentHTML(pos, `
       <div class="message ${screen}" id="mess${post.id || post.postId}">
-        <p class="author" onclick="loadUser('${post.author}')"><img class="pfp" src="${img}" alt="${post.author || post.sender_id}"> <span class="sender">${post.author || post.sender_id}</span> <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
+        <p class="author" onclick="loadUser('${post.author.username}')"><img class="pfp" src="${img}" alt="${post.author.username || post.sender_id}"> <span class="sender">${post.author.username || post.sender_id}</span> <span class="ts">${new Date(post.ts).toLocaleString()} on ${post.client || post.clientId || "unknown"}</span></p>
         <p class="text" id="post${post.id || post.postId}"></p>
         ${extra}
       </div>`);
@@ -595,7 +592,7 @@
           document.querySelector("#posts").innerHTML = "";
           screen = "home";
           console.log("login:", login);
-          if (true) { // mobileCheck()
+          if (mobileCheck()) {
             document.querySelector(".sidebar").style.display = "none";
             document.querySelector(".container").style.display = "block";
             document.querySelector(".mobileSidebar").style.display = "flex";
@@ -756,7 +753,7 @@
             document.querySelector(`#chan${chan.id}`).onclick = async () => {
               document.querySelector("#display").innerHTML = "";
               channel = chan.name;
-              let posts2 = await request(`${server}/guild/${b.uuid}/${chan.id}`);
+              let posts2 = await request(`${server}/guild/${b.uuid}/${chan.id}`, "get");
               if (!posts2.error) {
                 for (post of posts) {
                   loadPost(post, "beforeend", false, "display");
@@ -764,7 +761,7 @@
               }
             }
           }
-          let posts = await request(`${server}/guild/${b.uuid}/${chan.id}`);
+          let posts = await request(`${server}/guild/${b.uuid}/${chan.id}`, "get");
           if (!posts.error) {
             for (post of posts) {
               loadPost(post, "beforeend", false, "display");
