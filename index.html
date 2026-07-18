@@ -546,7 +546,8 @@
       const likePost = (post) => {
         let msg = document.querySelector(`#post${post.postId}`);
         if (msg) {
-          let liked = post.users_liked;
+          let liked = JSON.parse(post.users_liked);
+          console.log(post.users_liked, JSON.parse(posts.users_liked));
           document.querySelector(`#losv${post.postId}`).style.fill = liked.includes(uuid) ? "#f00" : "currentColor";
           document.querySelector(`#losv${post.postId}`).style.stroke = liked.includes(uuid) ? "#f00" : "var(--like-start)";
           document.querySelector(`#loco${post.postId}`).textContent = liked.length;
