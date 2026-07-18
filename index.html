@@ -1010,7 +1010,7 @@
         `);
         updateAttachs();
         document.querySelector("#done").onclick = async () => {
-          let fikles = document.querySelector("#link").files.slice(0, 10);
+          let fikles = document.querySelector("#link").files;
           let upload = "";
           if (fikles) {
             const form = new FormData();
