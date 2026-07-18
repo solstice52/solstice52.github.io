@@ -442,7 +442,7 @@
           </div>
           `);
         }
-        if (response.status == 401 && retry) {await request(`${server}/login`, "post"); text = await request(url, method, body, headers, false);}
+        if (response.status == 401 && retry) {await request(`${server}/login`, "post", {}, {}, false); text = await request(url, method, body, headers, false);}
         return text;
       }
       let server = "https://dev.maelink.net";
