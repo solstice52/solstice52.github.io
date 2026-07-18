@@ -430,7 +430,7 @@
     <h6 style="text-align: right;">Made with love, without vibecoding, for v0.5.0 beta <3</h6>
     <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.min.js"></script>
     <script>
-      const request = async (url, method, body, headers = {}) => {
+      const request = async (url, method, body, headers = {}, retry = true) => {
         const defaults = body instanceof FormData ? {} : {"Content-Type": "application/json"};
         let response = await fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)});
         let text = await response.json() || await response.text();
@@ -442,7 +442,7 @@
           </div>
           `);
         }
-        if (response.status == 401) {await request(`${server}/login`, "post"); text = await request(url, method, body, headers);}
+        if (response.status == 401 && retry) {await request(`${server}/login`, "post"); text = await request(url, method, body, headers, false);}
         return text;
       }
       let server = "https://dev.maelink.net";
