@@ -1018,6 +1018,7 @@
               formData.append("files[]", f);
             }
             upload = await request(`${server}/upload`, "post", form);
+            console.log("upload:", upload);
           }
           updateAttachs();
         }
