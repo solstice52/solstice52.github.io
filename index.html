@@ -547,7 +547,6 @@
         let msg = document.querySelector(`#post${post.postId}`);
         if (msg) {
           let liked = post.users_liked;
-          console.log(post.users_liked, JSON.parse(posts.users_liked) || 0, JSON.parse(posts).users_liked || 0);
           document.querySelector(`#losv${post.postId}`).style.fill = liked.includes(uuid) ? "#f00" : "currentColor";
           document.querySelector(`#losv${post.postId}`).style.stroke = liked.includes(uuid) ? "#f00" : "var(--like-start)";
           document.querySelector(`#loco${post.postId}`).textContent = liked.length;
@@ -1013,6 +1012,7 @@
         document.querySelector("#done").onclick = async () => {
           let fikles = document.querySelector("#link").files;
           let upload = "";
+          console.log(fikles);
           if (fikles) {
             const form = new FormData();
             for (let f of fikles) {
