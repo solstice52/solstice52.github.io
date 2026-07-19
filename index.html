@@ -630,6 +630,7 @@
             try {
               console.log("Received WebSocket message:", msg);
               let data = JSON.parse(msg.data);
+              test = data;
               if (data.type == "authenticated") author = data.username;
               if (data.type == "home:post" && screen == "home") loadPost(data, "afterbegin");
               if (data.type == "home:post:edit" && screen == "home") editPost(data);
@@ -1062,6 +1063,7 @@
           document.title = "Solstice";
         }
       });
+      let test;
     </script>
   </body>
 </html>
