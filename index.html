@@ -432,7 +432,7 @@
     <script>
       const request = async (url, method, body, headers = {}, retry = true) => {
         const defaults = body instanceof FormData ? {} : {"Content-Type": "application/json"};
-        let response = await fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: JSON.stringify(body)});
+        let response = await fetch(url, {method: method.toUpperCase(), credentials: "include", headers: {...defaults, ...headers}, body: body instanceof FormData ? body : JSON.stringify(body)});
         let text = await response.json() || await response.text();
         if (!response.ok) {
           document.body.insertAdjacentHTML("afterbegin", `
@@ -1016,7 +1016,7 @@
           if (fikles) {
             const form = new FormData();
             form.append("files[]", fikles[0]);
-            let upload = await request(`${server}/upload`, "post", form, {"Content-Length": fikles[0].size});
+            let upload = await request(`${server}/upload`, "post", form);
             console.log("upload:", upload);
             if (!upload.error) {
               attachments.push(upload.file.url);
