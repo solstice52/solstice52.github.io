@@ -1012,15 +1012,15 @@
         updateAttachs();
         document.querySelector("#done").onclick = async () => {
           let fikles = document.querySelector("#link").files;
-          let upload = "";
           console.log(fikles);
           if (fikles) {
             const form = new FormData();
-            for (let f of fikles) {
-              form.append("files[]", f);
-            }
-            upload = await request(`${server}/upload`, "post", form);
+            form.append("files[]", fikles[0]);
+            let upload = await request(`${server}/upload`, "post", form, {"Content-Length": fikles[0].size});
             console.log("upload:", upload);
+            if (!upload.error) {
+              attachments.push(upload.file.url);
+            }
           }
           updateAttachs();
         }
